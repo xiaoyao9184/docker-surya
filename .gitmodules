@@ -1,0 +1,3 @@
+[submodule "surya"]
+	path = surya
+	url = https://github.com/VikParuchuri/surya.git
