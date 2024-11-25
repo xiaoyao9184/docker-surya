@@ -1,0 +1,195 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "debugpy: ocr_app mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "streamlit",
+            "console": "integratedTerminal",
+            "args": [
+                "run",
+                "${workspaceFolder}/surya/ocr_app.py"
+            ],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: ocr_app offline",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "streamlit",
+            "console": "integratedTerminal",
+            "args": [
+                "run",
+                "${workspaceFolder}/surya/ocr_app.py"
+            ],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+                "RECOGNITION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41",
+                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_layout3/snapshots/6f4c319b213ddbe736c9fe6de87ad7dc3bbb0a1e",
+                "ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_order/snapshots/7b727d0a2c942cdc8596d186115f65c12c812bd8",
+                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: ocr_text mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/ocr_text.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: ocr_text offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/ocr_text.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+                "RECOGNITION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: detect_text mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/detect_text.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: detect_text offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/detect_text.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: detect_layout mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/detect_layout.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: detect_layout offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/detect_layout.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_layout3/snapshots/6f4c319b213ddbe736c9fe6de87ad7dc3bbb0a1e",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: reading_order mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/reading_order.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: reading_order offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/reading_order.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_order/snapshots/7b727d0a2c942cdc8596d186115f65c12c812bd8",
+                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_layout3/snapshots/6f4c319b213ddbe736c9fe6de87ad7dc3bbb0a1e",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: table_recognition mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/table_recognition.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: table_recognition offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/table_recognition.py",
+            "console": "integratedTerminal",
+            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14",
+                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_layout3/snapshots/6f4c319b213ddbe736c9fe6de87ad7dc3bbb0a1e",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+            },
+            "justMyCode": false
+        }
+    ]
+}
