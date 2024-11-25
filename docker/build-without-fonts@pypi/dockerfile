@@ -1,0 +1,28 @@
+ARG SURYA_VERSION=0.6.13
+ARG STREAMLIT_VERSION=1.39.0
+
+FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
+
+ARG SURYA_VERSION
+ARG STREAMLIT_VERSION
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    libgl1-mesa-glx \
+    libsm6 \
+    libxext6 \
+    libglib2.0-0 \
+    libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --upgrade pip
+
+RUN pip3 install --no-cache-dir surya-ocr==${SURYA_VERSION} streamlit==${STREAMLIT_VERSION}
+
+EXPOSE 8501
+
+VOLUME /root/.cache
+
+CMD ["surya_gui"]

@@ -1,0 +1,9 @@
+surya/.git/
+surya/.github/
+surya/benchmark/
+surya/cache/
+surya/scripts/
+surya/signatures/
+surya/static/
+surya/.gitignore
+surya/poetry.lock
