@@ -1,0 +1,12 @@
+
+
+services:
+  surya_app:
+    image: xiaoyao9184/surya:master
+    container_name: surya_ocr_app
+    environment:
+      - TORCH_DEVICE=cpu
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./../../cache:/root/.cache

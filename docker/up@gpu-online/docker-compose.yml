@@ -1,0 +1,18 @@
+
+
+services:
+  surya_app:
+    image: xiaoyao9184/surya:master
+    container_name: surya_ocr_app
+    environment:
+      - TORCH_DEVICE=cuda
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./../../cache:/root/.cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ gpu ]
