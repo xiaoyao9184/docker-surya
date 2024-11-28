@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install --upgrade pip
 
 COPY ./surya /app
-RUN pip3 install --no-cache-dir -e . "streamlit==1.39.0"
+RUN pip3 install --no-cache-dir -e . "streamlit==1.40.2"
 # The image is too large, exceeding 30GB.
 # RUN pip3 install poetry
 # RUN poetry install --no-root --with dev

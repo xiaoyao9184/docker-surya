@@ -13,11 +13,11 @@ on:
       surya_version:
         description: surya version of pypi
         required: true
-        default: 0.6.13
+        default: 0.7.0
       streamlit_version:
         description: streamlit version of pypi
         required: true
-        default: 1.39.0
+        default: 1.40.2
 
 jobs:
   build-and-push-docker-image:
@@ -29,9 +29,9 @@ jobs:
     strategy:
       matrix:
         SURYA_VERSION:
-          - ${{ github.event.inputs.surya_version || '0.6.13' }}
+          - ${{ github.event.inputs.surya_version || '0.7.0' }}
         STREAMLIT_VERSION:
-          - ${{ github.event.inputs.streamlit_version || '1.39.0' }}
+          - ${{ github.event.inputs.streamlit_version || '1.40.2' }}
         platform:
           - linux/amd64
 
