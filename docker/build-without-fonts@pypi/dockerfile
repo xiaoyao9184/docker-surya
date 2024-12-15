@@ -1,10 +1,12 @@
 ARG SURYA_VERSION=0.7.0
 ARG STREAMLIT_VERSION=1.40.2
+ARG GRADIO_VERSION=5.8.0
 
 FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
 
 ARG SURYA_VERSION
 ARG STREAMLIT_VERSION
+ARG GRADIO_VERSION
 
 WORKDIR /app
 
@@ -19,10 +21,19 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install --upgrade pip
 
-RUN pip3 install --no-cache-dir surya-ocr==${SURYA_VERSION} streamlit==${STREAMLIT_VERSION}
+RUN pip3 install --no-cache-dir \
+    surya-ocr==${SURYA_VERSION} \
+    streamlit==${STREAMLIT_VERSION} \
+    gradio==${GRADIO_VERSION}
+
+COPY ./gradio /workspace/gradio
 
 EXPOSE 8501
+EXPOSE 7860
 
 VOLUME /root/.cache
+
+ENV APP_PATH=/app
+ENV GRADIO_SERVER_NAME="0.0.0.0"
 
 CMD ["surya_gui"]

@@ -14,13 +14,22 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install --upgrade pip
 
 COPY ./surya /app
-RUN pip3 install --no-cache-dir -e . "streamlit==1.40.2"
+RUN pip3 install --no-cache-dir \
+    -e . \
+    streamlit==1.40.2 \
+    gradio==5.8.0
 # The image is too large, exceeding 30GB.
 # RUN pip3 install poetry
 # RUN poetry install --no-root --with dev
 
+COPY ./gradio /workspace/gradio
+
 EXPOSE 8501
+EXPOSE 7860
 
 VOLUME /root/.cache
+
+ENV APP_PATH=/app
+ENV GRADIO_SERVER_NAME="0.0.0.0"
 
 CMD ["surya_gui"]

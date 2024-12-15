@@ -7,3 +7,8 @@ surya/signatures/
 surya/static/
 surya/.gitignore
 surya/poetry.lock
+
+gradio/requirements.txt
+
+# Ignore generated files
+**/*.pyc
