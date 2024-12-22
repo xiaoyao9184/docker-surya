@@ -37,7 +37,8 @@
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
                 "RECOGNITION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41",
                 "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya_layout0/snapshots/421ac206a400227ea714d47a405e53ce74374957",
-                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14"
+                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--ocr_error_detection/snapshots/c1cbda3757670fd520553eaa5197656d331de414"
             },
             "justMyCode": false
         },
@@ -75,7 +76,8 @@
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
                 "RECOGNITION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41",
                 "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya_layout0/snapshots/421ac206a400227ea714d47a405e53ce74374957",
-                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14"
+                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--ocr_error_detection/snapshots/c1cbda3757670fd520553eaa5197656d331de414"
             },
             "justMyCode": false
         },

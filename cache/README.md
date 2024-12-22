@@ -41,7 +41,7 @@ and `./cache/huggingface/hub/models--vikp--surya_rec2` like this
 │   ├── 31bdd446acbf8a47ea46d7d0a4998f145f0cc75a
 │   ├── 5497e8690cfe93cbedec7efaf91f6ac734496ac8
 │   ├── 93c190b5690dd55aac16723222a9909e2be0faec
-│   ├── 9a75b64cbeaed06820559bcda4e12c1235de62b5bce787d57cf56a9c3a7123d1
+│   ├── 9a75b64cbeaed0.8.1559bcda4e12c1235de62b5bce787d57cf56a9c3a7123d1
 │   ├── a6344aac8c09253b3b630fb776ae94478aa0275b
 │   ├── a83ef0a8114bd50cc650e08a9738c0f6345f5186
 │   ├── dd34282c30833587a799d334d44a637694d41c8e
@@ -54,7 +54,7 @@ and `./cache/huggingface/hub/models--vikp--surya_rec2` like this
         ├── config.json -> ../../blobs/5497e8690cfe93cbedec7efaf91f6ac734496ac8
         ├── generation_config.json -> ../../blobs/e237701f4293e736f74d2c968582935590107034
         ├── .gitattributes -> ../../blobs/a6344aac8c09253b3b630fb776ae94478aa0275b
-        ├── model.safetensors -> ../../blobs/9a75b64cbeaed06820559bcda4e12c1235de62b5bce787d57cf56a9c3a7123d1
+        ├── model.safetensors -> ../../blobs/9a75b64cbeaed0.8.1559bcda4e12c1235de62b5bce787d57cf56a9c3a7123d1
         ├── preprocessor_config.json -> ../../blobs/dd34282c30833587a799d334d44a637694d41c8e
         ├── README.md -> ../../blobs/a83ef0a8114bd50cc650e08a9738c0f6345f5186
         ├── special_tokens_map.json -> ../../blobs/2f525ec0be1f2e8cb257a7b3e01de3bd003f0e81
@@ -117,11 +117,41 @@ and `./cache/huggingface/hubmodels--datalab-to--surya_layout0` like this
 4 directories, 10 files
 ```
 
+and `./cache/huggingface/hubmodels--datalab-to--ocr_error_detection` like this
+
+
+```
+.
+├── blobs
+│   ├── 21f54a4b56685f29358f3a8de1f5b8d827357d07
+│   ├── 9856c52ab99c8f7435bef6bf6e4c8a86a2594187
+│   ├── 9bbecc17cabbcbd3112c14d6982b51403b264bfa
+│   ├── a6344aac8c09253b3b630fb776ae94478aa0275b
+│   ├── c305af17d2fcaf52c00b125a2dfabfbe16e71454
+│   ├── cd3c57f2e967aad6a020decd1c1c41be-10
+│   ├── e837bab60a5d204e29622d127c2dafe508aa0731
+│   └── f4a46fa248690b0b2adc680e845ec8fd491eb24c
+├── refs
+│   └── main
+└── snapshots
+    └── c1cbda3757670fd520553eaa5197656d331de414
+        ├── config.json -> ../../blobs/9856c52ab99c8f7435bef6bf6e4c8a86a2594187
+        ├── model.safetensors -> ../../blobs/cd3c57f2e967aad6a020decd1c1c41be-10
+        ├── README.md -> ../../blobs/c305af17d2fcaf52c00b125a2dfabfbe16e71454
+        ├── special_tokens_map.json -> ../../blobs/9bbecc17cabbcbd3112c14d6982b51403b264bfa
+        ├── tokenizer_config.json -> ../../blobs/f4a46fa248690b0b2adc680e845ec8fd491eb24c
+        ├── tokenizer.json -> ../../blobs/21f54a4b56685f29358f3a8de1f5b8d827357d07
+        └── vocab.txt -> ../../blobs/e837bab60a5d204e29622d127c2dafe508aa0731
+
+5 directories, 16 files
+```
+
 It will use
 - `./cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95`
 - `./cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41`
 - `./cache/huggingface/hub/models--vikp--surya_tablerec/snapshots/8bca165f81e9cee5fb382413eb23175079917d14`
 - `./cache/huggingface/hub/hubmodels--datalab-to--surya_layout0/snapshots/421ac206a400227ea714d47a405e53ce74374957`
+- `./cache/huggingface/hub/hubmodels--datalab-to--ocr_error_detection/snapshots/c1cbda3757670fd520553eaa5197656d331de414`
 
 For more details, refer to [up@cpu-offline/docker-compose.yml](./../docker/up@cpu-offline/docker-compose.yml).
 
@@ -143,4 +173,5 @@ huggingface-cli download vikp/surya_det3 --repo-type model --revision main --cac
 huggingface-cli download vikp/surya_rec2 --repo-type model --revision main --cache-dir ./cache/huggingface/hub
 huggingface-cli download vikp/surya_tablerec --repo-type model --revision main --cache-dir ./cache/huggingface/hub
 huggingface-cli download datalab-to/surya_layout0 --revision main --cache-dir ./cache/huggingface/hub
+huggingface-cli download datalab-to/ocr_error_detection --revision main --cache-dir ./cache/huggingface/hub
 ```

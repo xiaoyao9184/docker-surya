@@ -22,6 +22,7 @@ from surya.model.recognition.model import load_model as load_rec_model
 from surya.model.recognition.processor import load_processor as load_rec_processor
 from surya.model.table_rec.model import load_model as load_table_model
 from surya.model.table_rec.processor import load_processor as load_table_processor
+from surya.model.ocr_error.model import load_model as load_ocr_error_model, load_tokenizer as load_ocr_error_processor
 from surya.postprocessing.heatmap import draw_polys_on_image, draw_bboxes_on_image
 from surya.ocr import run_ocr
 from surya.postprocessing.text import draw_text_on_image
@@ -31,7 +32,9 @@ from surya.input.langs import replace_lang_with_code
 from surya.schema import OCRResult, TextDetectionResult, LayoutResult, TableResult
 from surya.settings import settings
 from surya.tables import batch_table_recognition
-from surya.postprocessing.util import rescale_bboxes, rescale_bbox
+from surya.postprocessing.util import rescale_bbox
+from pdftext.extraction import plain_text_output
+from surya.ocr_error import batch_ocr_error_detection
 
 
 def load_det_cached():
@@ -45,6 +48,34 @@ def load_layout_cached():
 
 def load_table_cached():
     return load_table_model(), load_table_processor()
+
+def load_ocr_error_cached():
+    return load_ocr_error_model(), load_ocr_error_processor()
+
+
+def run_ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pages=15):
+    # Sample the text from the middle of the PDF
+    page_middle = page_count // 2
+    page_range = range(max(page_middle - max_pages, 0), min(page_middle + max_pages, page_count))
+    text = plain_text_output(pdf_file, page_range=page_range)
+
+    sample_gap = len(text) // max_samples
+    if len(text) == 0 or sample_gap == 0:
+        return "This PDF has no text or very little text", ["no text"]
+
+    if sample_gap < sample_len:
+        sample_gap = sample_len
+
+    # Split the text into samples for the model
+    samples = []
+    for i in range(0, len(text), sample_gap):
+        samples.append(text[i:i + sample_len])
+
+    results = batch_ocr_error_detection(samples, ocr_error_model, ocr_error_processor)
+    label = "This PDF has good text."
+    if results.labels.count("bad") / len(results.labels) > .2:
+        label = "This PDF may have garbled or bad OCR text."
+    return label, results.labels
 
 
 def text_detection(img) -> (Image.Image, TextDetectionResult):
@@ -148,6 +179,7 @@ det_model, det_processor = load_det_cached()
 rec_model, rec_processor = load_rec_cached()
 layout_model, layout_processor = load_layout_cached()
 table_model, table_processor = load_table_cached()
+ocr_error_model, ocr_error_processor = load_ocr_error_cached()
 
 with gr.Blocks(title="Surya") as demo:
     gr.Markdown("""
@@ -179,6 +211,8 @@ with gr.Blocks(title="Surya") as demo:
             use_pdf_boxes_ckb = gr.Checkbox(label="Use PDF table boxes", value=True, info="Table recognition only: Use the bounding boxes from the PDF file vs text detection model.")
             skip_table_detection_ckb = gr.Checkbox(label="Skip table detection", value=False, info="Table recognition only: Skip table detection and treat the whole image/page as a table.")
             table_rec_btn = gr.Button("Run Table Rec")
+
+            ocr_errors_btn = gr.Button("Run bad PDF text detection")
         with gr.Column():
             result_img = gr.Image(label="Result image")
             result_json = gr.JSON(label="Result json")
@@ -249,6 +283,19 @@ with gr.Blocks(title="Surya") as demo:
             fn=table_rec_img,
             inputs=[in_img, in_file, in_num, use_pdf_boxes_ckb, skip_table_detection_ckb],
             outputs=[result_img, result_json]
+        )
+        # Run bad PDF text detection
+        def ocr_errors_pdf(file, page_count, sample_len=512, max_samples=10, max_pages=15):
+            if file.endswith('.pdf'):
+                count = count_pdf(file)
+            else:
+                raise gr.Error("This feature only works with PDFs.", duration=5)
+            label, results = run_ocr_errors(file, count)
+            return gr.update(label="Result json:" + label, value=results)
+        ocr_errors_btn.click(
+            fn=ocr_errors_pdf,
+            inputs=[in_file, in_num, use_pdf_boxes_ckb, skip_table_detection_ckb],
+            outputs=[result_json]
         )
 
 demo.launch()
