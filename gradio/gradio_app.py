@@ -2,13 +2,17 @@ import os
 import sys
 
 if "APP_PATH" in os.environ:
-    os.chdir(os.environ["APP_PATH"])
-    # fix sys.path for import
-    sys.path.append(os.getcwd())
+    app_path = os.path.abspath(os.environ["APP_PATH"])
+    if os.getcwd() != app_path:
+        # fix sys.path for import
+        os.chdir(app_path)
+    if app_path not in sys.path:
+        sys.path.append(app_path)
+
+import gradio as gr
 
 from typing import List
 
-import gradio as gr
 import pypdfium2
 from pypdfium2 import PdfiumError
 
@@ -52,7 +56,7 @@ def load_table_cached():
 def load_ocr_error_cached():
     return load_ocr_error_model(), load_ocr_error_processor()
 
-
+#
 def run_ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pages=15):
     # Sample the text from the middle of the PDF
     page_middle = page_count // 2
@@ -77,14 +81,14 @@ def run_ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pag
         label = "This PDF may have garbled or bad OCR text."
     return label, results.labels
 
-
+#
 def text_detection(img) -> (Image.Image, TextDetectionResult):
     pred = batch_text_detection([img], det_model, det_processor)[0]
     polygons = [p.polygon for p in pred.bboxes]
     det_img = draw_polys_on_image(polygons, img.copy())
     return det_img, pred
 
-
+#
 def layout_detection(img) -> (Image.Image, LayoutResult):
     pred = batch_layout_detection([img], layout_model, layout_processor)[0]
     polygons = [p.polygon for p in pred.bboxes]
@@ -92,7 +96,7 @@ def layout_detection(img) -> (Image.Image, LayoutResult):
     layout_img = draw_polys_on_image(polygons, img.copy(), labels=labels, label_font_size=18)
     return layout_img, pred
 
-
+#
 def table_recognition(img, highres_img, filepath, page_idx: int, use_pdf_boxes: bool, skip_table_detection: bool) -> (Image.Image, List[TableResult]):
     if skip_table_detection:
         layout_tables = [(0, 0, highres_img.size[0], highres_img.size[1])]
@@ -143,6 +147,16 @@ def table_recognition(img, highres_img, filepath, page_idx: int, use_pdf_boxes: 
         table_img = draw_bboxes_on_image(adjusted_bboxes, highres_img, labels=labels, label_font_size=18, color=colors)
     return table_img, table_preds
 
+# Function for OCR
+def ocr(img, highres_img, langs: List[str]) -> (Image.Image, OCRResult):
+    replace_lang_with_code(langs)
+    img_pred = run_ocr([img], [langs], det_model, det_processor, rec_model, rec_processor, highres_images=[highres_img])[0]
+
+    bboxes = [l.bbox for l in img_pred.text_lines]
+    text = [l.text for l in img_pred.text_lines]
+    rec_img = draw_text_on_image(bboxes, text, img.size, langs, has_math="_math" in langs)
+    return rec_img, img_pred
+
 def open_pdf(pdf_file):
     return pypdfium2.PdfDocument(pdf_file)
 
@@ -164,22 +178,13 @@ def get_page_image(pdf_file, page_num, dpi=96):
 def get_uploaded_image(in_file):
     return Image.open(in_file).convert("RGB")
 
-# Function for OCR
-def ocr(img, highres_img, langs: List[str]) -> (Image.Image, OCRResult):
-    replace_lang_with_code(langs)
-    img_pred = run_ocr([img], [langs], det_model, det_processor, rec_model, rec_processor, highres_images=[highres_img])[0]
-
-    bboxes = [l.bbox for l in img_pred.text_lines]
-    text = [l.text for l in img_pred.text_lines]
-    rec_img = draw_text_on_image(bboxes, text, img.size, langs, has_math="_math" in langs)
-    return rec_img, img_pred
-
-
-det_model, det_processor = load_det_cached()
-rec_model, rec_processor = load_rec_cached()
-layout_model, layout_processor = load_layout_cached()
-table_model, table_processor = load_table_cached()
-ocr_error_model, ocr_error_processor = load_ocr_error_cached()
+# Load models if not already loaded in reload mode
+if 'det_model' not in globals():
+    det_model, det_processor = load_det_cached()
+    rec_model, rec_processor = load_rec_cached()
+    layout_model, layout_processor = load_layout_cached()
+    table_model, table_processor = load_table_cached()
+    ocr_error_model, ocr_error_processor = load_ocr_error_cached()
 
 with gr.Blocks(title="Surya") as demo:
     gr.Markdown("""
@@ -272,6 +277,7 @@ with gr.Blocks(title="Surya") as demo:
             inputs=[in_img, in_file, in_num, lang_dd],
             outputs=[result_img, result_json]
         )
+        # Run Table Recognition
         def table_rec_img(pil_image, in_file, page_number, use_pdf_boxes, skip_table_detection):
             if in_file.endswith('.pdf'):
                 pil_image_highres = get_page_image(in_file, page_number, dpi=settings.IMAGE_DPI_HIGHRES)
@@ -298,4 +304,5 @@ with gr.Blocks(title="Surya") as demo:
             outputs=[result_json]
         )
 
-demo.launch()
+if __name__ == "__main__":
+    demo.launch()
