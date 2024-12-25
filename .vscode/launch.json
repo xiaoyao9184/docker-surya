@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "debugpy: surya gradio mirror",
+            "name": "debugpy: gradio_run mirror",
             "type": "debugpy",
             "request": "launch",
-            "program": "${env:CONDA_PREFIX}/envs/surya/bin/gradio",
+            "program": "${workspaceFolder}/gradio/gradio_run.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "args": [
@@ -20,10 +20,10 @@
             "justMyCode": false
         },
         {
-            "name": "debugpy: surya gradio offline",
+            "name": "debugpy: gradio_run offline",
             "type": "debugpy",
             "request": "launch",
-            "program": "${env:CONDA_PREFIX}/envs/surya/bin/gradio",
+            "program": "${workspaceFolder}/gradio/gradio_run.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "args": [
