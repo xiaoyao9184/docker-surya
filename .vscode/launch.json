@@ -2,6 +2,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "debugpy: label_wsgi offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/label/_wsgi.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/label",
+            "args": [
+                "-d",
+                "-p", "9090"
+            ],
+            "env": {
+                // "LABEL_STUDIO_URL": "http://localhost:8080",
+                // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
+                "RECOGNITION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41",
+            },
+            "justMyCode": false
+        },
+        {
             "name": "debugpy: gradio_run mirror",
             "type": "debugpy",
             "request": "launch",
