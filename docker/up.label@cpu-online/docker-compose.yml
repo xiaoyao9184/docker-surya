@@ -1,0 +1,26 @@
+
+
+services:
+  labelstudio:
+    image: heartexlabs/label-studio
+    container_name: label-studio
+    environment:
+      - LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=true
+      - LABEL_STUDIO_USERNAME=label@localhost
+      - LABEL_STUDIO_PASSWORD=label.123
+      - LABEL_STUDIO_USER_TOKEN=label-token
+    ports:
+      - "8080:8080"
+
+  surya_label:
+    image: xiaoyao9184/surya:master
+    container_name: surya-ocr-label
+    working_dir: /workspace/label
+    command: label-studio-ml start --root-dir /workspace label
+    environment:
+      - LABEL_STUDIO_API_KEY=label-token
+      - TORCH_DEVICE=cpu
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./../../cache:/root/.cache
