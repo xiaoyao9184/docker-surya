@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libxext6 \
     libglib2.0-0 \
     libxrender-dev \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --upgrade pip
@@ -26,7 +27,11 @@ COPY ./surya /app
 RUN pip3 install --no-cache-dir \
     -e . \
     streamlit==1.41.1 \
-    gradio==5.8.0
+    gradio==5.8.0 \
+    gunicorn==22.0.0 \
+    git+https://github.com/HumanSignal/label-studio-ml-backend.git@master#egg=label-studio-ml \
+    boto3==1.35.91
+
 # The image is too large, with layers exceeding 10GB.
 # RUN pip3 install poetry
 # RUN poetry install --no-root --with dev
@@ -37,13 +42,18 @@ COPY --from=fonts /fonts/GoNotoCurrent-Regular.ttf /opt/conda/lib/python3.11/sit
 COPY --from=fonts /fonts/GoNotoCJKCore.ttf /opt/conda/lib/python3.11/site-packages/static/fonts/GoNotoCJKCore.ttf
 
 COPY ./gradio /workspace/gradio
+COPY ./label /workspace/label
 
 EXPOSE 8501
 EXPOSE 7860
+EXPOSE 9090
 
 VOLUME /root/.cache
+VOLUME /workspace/label/.pytest_cache
+# VOLUME /workspace/label/cache.db
 
 ENV APP_PATH=/app
 ENV GRADIO_SERVER_NAME="0.0.0.0"
+ENV LABEL_STUDIO_URL=http://label-studio:8080
 
 CMD ["surya_gui"]

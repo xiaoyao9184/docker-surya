@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     libxext6 \
     libglib2.0-0 \
     libxrender-dev \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --upgrade pip
@@ -24,16 +25,24 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir \
     surya-ocr==${SURYA_VERSION} \
     streamlit==${STREAMLIT_VERSION} \
-    gradio==${GRADIO_VERSION}
+    gradio==${GRADIO_VERSION} \
+    gunicorn==22.0.0 \
+    git+https://github.com/HumanSignal/label-studio-ml-backend.git@1a37d2f#egg=label-studio-ml \
+    boto3==1.35.91
 
 COPY ./gradio /workspace/gradio
+COPY ./label /workspace/label
 
 EXPOSE 8501
 EXPOSE 7860
+EXPOSE 9090
 
 VOLUME /root/.cache
+VOLUME /workspace/label/.pytest_cache
+# VOLUME /workspace/label/cache.db
 
 ENV APP_PATH=/app
 ENV GRADIO_SERVER_NAME="0.0.0.0"
+ENV LABEL_STUDIO_URL=http://label-studio:8080
 
 CMD ["surya_gui"]
