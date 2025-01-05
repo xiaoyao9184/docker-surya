@@ -130,7 +130,9 @@
             "label": "conda: create env",
             "type": "shell",
             "command": [
-                "conda env create -f ./environment.yml"
+                "git config --global url.'https://github.com/xiaoyao9184/label-studio-sdk'.insteadOf 'https://github.com/HumanSignal/label-studio-sdk'",
+                "&& conda env create -f ./environment.yml",
+                "&& git config --global --unset url.'https://github.com/xiaoyao9184/label-studio-sdk'.insteadOf"
             ]
         }
     ]

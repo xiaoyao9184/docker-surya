@@ -27,11 +27,16 @@ COPY ./surya /app
 RUN pip3 install --no-cache-dir \
     -e . \
     streamlit==1.41.1 \
-    gradio==5.8.0 \
-    gunicorn==22.0.0 \
-    git+https://github.com/HumanSignal/label-studio-ml-backend.git@master#egg=label-studio-ml \
-    boto3==1.35.91
+    gradio==5.8.0
 
+# fix The Poetry configuration is invalid miss name of project
+# https://github.com/HumanSignal/label-studio-sdk/pull/380
+RUN git config --global url."https://github.com/xiaoyao9184/label-studio-sdk".insteadOf "https://github.com/HumanSignal/label-studio-sdk" \
+    && pip3 install --no-cache-dir \
+    gunicorn==22.0.0 \
+    boto3==1.35.91 \
+    git+https://github.com/HumanSignal/label-studio-ml-backend.git@1a37d2f#egg=label-studio-ml \
+    && git config --global --unset url."https://github.com/xiaoyao9184/label-studio-sdk".insteadOf
 # The image is too large, with layers exceeding 10GB.
 # RUN pip3 install poetry
 # RUN poetry install --no-root --with dev
