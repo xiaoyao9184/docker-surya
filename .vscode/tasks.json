@@ -31,9 +31,9 @@
             "command": "docker build -t xiaoyao9184/surya:master -f ./docker/build@source/dockerfile .",
         },
         {
-            "label": "docker: build 0.8.1",
+            "label": "docker: build 0.8.2",
             "type": "shell",
-            "command": "docker build -t xiaoyao9184/surya:0.8.1 -f ./docker/build@pypi/dockerfile .",
+            "command": "docker build -t xiaoyao9184/surya:0.8.2 -f ./docker/build@pypi/dockerfile .",
         },
         {
             "label": "huggingface-cli: download models",
@@ -50,7 +50,7 @@
                 "huggingface-cli download vikp/surya_det3 --revision main --cache-dir ./cache/huggingface/hub",
                 "&& huggingface-cli download vikp/surya_rec2 --revision main --cache-dir ./cache/huggingface/hub",
                 "&& huggingface-cli download vikp/surya_tablerec --revision main --cache-dir ./cache/huggingface/hub",
-                "&& huggingface-cli download datalab-to/surya_layout0 --revision main --cache-dir ./cache/huggingface/hub",
+                "&& huggingface-cli download datalab-to/surya_layout --revision main --cache-dir ./cache/huggingface/hub",
                 "&& huggingface-cli download datalab-to/ocr_error_detection --revision main --cache-dir ./cache/huggingface/hub",
             ]
         },

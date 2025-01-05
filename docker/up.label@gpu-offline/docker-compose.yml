@@ -13,7 +13,7 @@ services:
     container_name: label-studio
 
   surya_label:
-    image: xiaoyao9184/surya:0.8.1
+    image: xiaoyao9184/surya:0.8.2
     container_name: surya-ocr-label
     working_dir: /workspace/label
     command: label-studio-ml start --root-dir /workspace label
@@ -22,7 +22,7 @@ services:
       - TORCH_DEVICE=cuda
       - HF_HUB_OFFLINE=true
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95
-      - LAYOUT_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--surya_layout0/snapshots/421ac206a400227ea714d47a405e53ce74374957
+      - LAYOUT_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--surya_layout/snapshots/7ac8e390226ee5fa2125dd303d827f79d31d1a1f
     ports:
       - "9090:9090"
     volumes:
