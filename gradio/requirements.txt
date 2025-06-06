@@ -7,3 +7,5 @@ pdftext==0.5.0
 
 # fix compatibility issue keep same with poetry lock file
 transformers==4.48.1
+# fix https://github.com/gradio-app/gradio/issues/10662
+pydantic==2.10.5
