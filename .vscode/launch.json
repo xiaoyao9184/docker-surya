@@ -220,6 +220,35 @@
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95",
             },
             "justMyCode": false
+        },
+        {
+            "name": "debugpy: ocr_latex mirror",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/ocr_latex.py",
+            "console": "integratedTerminal",
+            "args": ["${workspaceFolder}/surya/static/images/latex_ocr.png"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: ocr_latex offline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/surya/ocr_latex.py",
+            "console": "integratedTerminal",
+            "args": ["${workspaceFolder}/surya/static/images/latex_ocr.png"],
+            "env": {
+                "STREAMLIT_SERVER_PORT": "8501",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "TEXIFY_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--texify/snapshots/8f1d761762b3e977e9e62cebfca487d489556abc",
+            },
+            "justMyCode": false
         }
     ]
 }
