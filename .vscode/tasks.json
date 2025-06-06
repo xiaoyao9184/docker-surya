@@ -52,6 +52,7 @@
                 "&& huggingface-cli download datalab-to/surya_tablerec --revision main --cache-dir ./cache/huggingface/hub",
                 "&& huggingface-cli download datalab-to/surya_layout --revision main --cache-dir ./cache/huggingface/hub",
                 "&& huggingface-cli download datalab-to/ocr_error_detection --revision main --cache-dir ./cache/huggingface/hub",
+                "&& huggingface-cli download datalab-to/texify --revision main --cache-dir ./cache/huggingface/hub",
             ]
         },
         {

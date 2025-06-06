@@ -14,6 +14,7 @@ services:
       - RECOGNITION_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41
       - TABLE_REC_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--surya_tablerec/snapshots/7327dac38c300b2f6cd0501ebc2347dd3ef7fcf2
       - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--ocr_error_detection/snapshots/c1cbda3757670fd520553eaa5197656d331de414
+      - TEXIFY_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--texify/snapshots/8f1d761762b3e977e9e62cebfca487d489556abc
     ports:
       - "7860:7860"
     volumes:
