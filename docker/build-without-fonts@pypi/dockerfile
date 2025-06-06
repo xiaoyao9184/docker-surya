@@ -25,6 +25,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir \
     surya-ocr==${SURYA_VERSION} \
     streamlit==${STREAMLIT_VERSION} \
+    streamlit-drawable-canvas-jsretry \
     gradio==${GRADIO_VERSION} \
     gunicorn==22.0.0 \
     git+https://github.com/HumanSignal/label-studio-ml-backend.git@1a37d2f#egg=label-studio-ml \

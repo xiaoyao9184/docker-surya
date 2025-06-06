@@ -17,6 +17,8 @@ dependencies:
     - -e ./surya
     # streamlit app need pdftext for run_ocr_errors
     - pdftext==0.5.0
+    # texify_app need streamlit-drawable-canvas-jsretry for st_canvas
+    - streamlit-drawable-canvas-jsretry
     - gradio==5.8.0
     # for label-studio development and test
     - -r label/requirements_base.txt

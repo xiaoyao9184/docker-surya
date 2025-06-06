@@ -18,6 +18,7 @@ COPY ./surya /app
 RUN pip3 install --no-cache-dir \
     -e . \
     streamlit==1.41.1 \
+    streamlit-drawable-canvas-jsretry \
     gradio==5.8.0 \
     gunicorn==22.0.0 \
     git+https://github.com/HumanSignal/label-studio-ml-backend.git@master#egg=label-studio-ml \
