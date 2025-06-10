@@ -13,7 +13,7 @@ services:
     container_name: label-studio
 
   surya_label:
-    image: xiaoyao9184/surya:0.13.0
+    image: xiaoyao9184/surya:0.13.1
     container_name: surya-ocr-label
     working_dir: /workspace/label
     command: label-studio-ml start --root-dir /workspace label
