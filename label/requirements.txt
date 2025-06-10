@@ -1,2 +1,2 @@
-surya-ocr==0.10.2
+surya-ocr==0.10.3
 boto3==1.35.91
