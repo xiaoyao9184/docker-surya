@@ -334,7 +334,7 @@ diff -qr ./cache/huggingface/hub/models--datalab-to--inline_math_det0/snapshots/
 
 | huggingface model name | huggingface model version | surya s3 model name | surya s3 model version |
 | --- | --- | --- | --- |
-| xiaoyao9184/surya_text_detection | 2025_02_18 | text_detection | 2025_02_18 |
+| xiaoyao9184/surya_text_detection | 2025_02_28 | text_detection | 2025_02_28 |
 | xiaoyao9184/surya_text_recognition | 2025_02_18 | text_recognition | 2025_02_18 |
 | xiaoyao9184/surya_table_recognition | 2025_02_18 | table_recognition | 2025_02_18 |
 | xiaoyao9184/surya_texify | 2025_02_18 | texify | 2025_02_18 |
@@ -362,7 +362,7 @@ pip install -U "huggingface_hub[cli]"
 download model
 
 ```bash
-huggingface-cli download xiaoyao9184/surya_text_detection --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/text_detection/2025_02_18
+huggingface-cli download xiaoyao9184/surya_text_detection --repo-type model --revision 2025_02_28 --local-dir ./cache/datalab/models/text_detection/2025_02_28
 huggingface-cli download xiaoyao9184/surya_text_recognition --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/text_recognition/2025_02_18
 huggingface-cli download xiaoyao9184/surya_table_recognition --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/table_recognition/2025_02_18
 huggingface-cli download xiaoyao9184/surya_texify --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/texify/2025_02_18
