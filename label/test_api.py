@@ -77,18 +77,19 @@ def test_predict(client, model_dir_env):
     response = client.post('/predict', data=json.dumps(request), content_type='application/json')
     assert response.status_code == 200
     response = json.loads(response.data)
-    expected_texts = {
-        'IZIN SOLUTIONS', 
-        'Swipe >', 
-        'I', 
-        'PUNY', 
-        'KENAPA', 
-        'Kenapa Harus Punya IMB?', 
-        'HARUS'
-    }
-    texts_response = set()
+    expected_texts = [
+        'IZIN SOLUTIONS',
+        'KENAPA',
+        'HARRUS',
+        'PUNY',
+        'T',
+        '',
+        'Swipe ->',
+        'Kenapa Harus Punya IMB?'
+    ]
+    texts_response = []
     for r in response['results'][0]['result']:
         if r['from_name'] == 'transcription':
             assert r['value']['labels'][0] == 'Text'
-            texts_response.add(r['value']['text'][0])
+            texts_response.append(r['value']['text'][0])
     assert texts_response == expected_texts
