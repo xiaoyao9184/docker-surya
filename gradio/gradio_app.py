@@ -72,12 +72,12 @@ def inline_detection(img) -> (Image.Image, TextDetectionResult):
     det_img = draw_polys_on_image(inline_polygons, img.copy(), color='blue')
     return det_img, text_pred, inline_pred
 
-# just copy from streamlit_app.py `name 'inline_pred' is not defined`
+# just copy from streamlit_app.py
 def text_detection(img) -> (Image.Image, TextDetectionResult):
     text_pred = predictors["detection"]([img])[0]
     text_polygons = [p.polygon for p in text_pred.bboxes]
     det_img = draw_polys_on_image(text_polygons, img.copy())
-    return det_img, text_pred #, inline_pred
+    return det_img, text_pred
 
 # just copy from streamlit_app.py
 def layout_detection(img) -> (Image.Image, LayoutResult):
