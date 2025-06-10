@@ -21,8 +21,8 @@ services:
       - LABEL_STUDIO_API_KEY=label-token
       - TORCH_DEVICE=cuda
       - HF_HUB_OFFLINE=true
-      - DETECTOR_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95
-      - LAYOUT_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--surya_layout/snapshots/7ac8e390226ee5fa2125dd303d827f79d31d1a1f
+      - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_02_18
+      - LAYOUT_MODEL_CHECKPOINT=/root/.cache/datalab/models/layout/2025_02_18
     ports:
       - "9090:9090"
     volumes:
