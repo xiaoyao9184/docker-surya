@@ -137,12 +137,42 @@ and `./cache/huggingface/hub/models--datalab-to--ocr_error_detection` like this
 5 directories, 16 files
 ```
 
+and `./cache/huggingface/hub/models--datalab-to--texify` like this
+
+
+```
+.
+├── blobs
+│   ├── 0b7eef4d4e38242a8bfe86b25350ee57a80ddea2-gzip
+│   ├── 1c7a55edfe48b2b661b042bf711fbfce-10
+│   ├── 5e12d9ba900b47f9ffa293b89737baa294699859
+│   ├── 80cf0856476a03804ea7139a7ded72575f3f38c6-gzip
+│   ├── a6344aac8c09253b3b630fb776ae94478aa0275b-gzip
+│   ├── a782b2f1cdab4d0bacb2dc0f85d02c4b1e31f0bd-gzip
+│   ├── e3cd24912053c61b0331779b976df959-10
+│   └── fbed506ad438e179c130257fabd67cb49c932793-gzip
+├── refs
+│   └── main
+└── snapshots
+    └── 8f1d761762b3e977e9e62cebfca487d489556abc
+        ├── config.json -> ../../blobs/80cf0856476a03804ea7139a7ded72575f3f38c6-gzip
+        ├── model.safetensors -> ../../blobs/e3cd24912053c61b0331779b976df959-10
+        ├── preprocessor_config.json -> ../../blobs/0b7eef4d4e38242a8bfe86b25350ee57a80ddea2-gzip
+        ├── README.md -> ../../blobs/5e12d9ba900b47f9ffa293b89737baa294699859
+        ├── special_tokens_map.json -> ../../blobs/a782b2f1cdab4d0bacb2dc0f85d02c4b1e31f0bd-gzip
+        ├── tokenizer.json -> ../../blobs/fbed506ad438e179c130257fabd67cb49c932793-gzip
+        └── training_args.bin -> ../../blobs/1c7a55edfe48b2b661b042bf711fbfce-10
+
+5 directories, 16 files
+```
+
 It will use
 - `./cache/huggingface/hub/models--vikp--surya_det3/snapshots/467ee9ec33e6e6c5f73e57dbc1415b14032f5b95`
 - `./cache/huggingface/hub/models--vikp--surya_rec2/snapshots/6611509b2c3a32c141703ce19adc899d9d0abf41`
 - `./cache/huggingface/hub/models--datalab-to--surya_tablerec/snapshots/7327dac38c300b2f6cd0501ebc2347dd3ef7fcf2`
 - `./cache/huggingface/hub/models--datalab-to--surya_layout/snapshots/7ac8e390226ee5fa2125dd303d827f79d31d1a1f`
 - `./cache/huggingface/hub/models--datalab-to--ocr_error_detection/snapshots/c1cbda3757670fd520553eaa5197656d331de414`
+- `./cache/huggingface/hub/models--datalab-to--texify/snapshots/8f1d761762b3e977e9e62cebfca487d489556abc`
 
 For more details, refer to [up@cpu-offline/docker-compose.yml](./../docker/up@cpu-offline/docker-compose.yml).
 
@@ -161,8 +191,9 @@ download model
 
 ```bash
 huggingface-cli download vikp/surya_det3 --repo-type model --revision 467ee9ec33e6e6c5f73e57dbc1415b14032f5b95 --cache-dir ./cache/huggingface/hub
-huggingface-cli download vikp/surya_rec2 --repo-type 6611509b2c3a32c141703ce19adc899d9d0abf41 --revision main --cache-dir ./cache/huggingface/hub
+huggingface-cli download vikp/surya_rec2 --repo-type model --revision 6611509b2c3a32c141703ce19adc899d9d0abf41 --cache-dir ./cache/huggingface/hub
 huggingface-cli download datalab-to/surya_tablerec --repo-type model --revision 7327dac38c300b2f6cd0501ebc2347dd3ef7fcf2 --cache-dir ./cache/huggingface/hub
 huggingface-cli download datalab-to/surya_layout --repo-type model --revision 7ac8e390226ee5fa2125dd303d827f79d31d1a1f --cache-dir ./cache/huggingface/hub
 huggingface-cli download datalab-to/ocr_error_detection --repo-type model --revision c1cbda3757670fd520553eaa5197656d331de414 --cache-dir ./cache/huggingface/hub
+huggingface-cli download datalab-to/texify --repo-type model --revision 8f1d761762b3e977e9e62cebfca487d489556abc --cache-dir ./cache/huggingface/hub
 ```
