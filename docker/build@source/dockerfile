@@ -29,7 +29,8 @@ RUN pip3 install --no-cache-dir \
     transformers==4.48.1 \
     pdftext==0.5.0 \
     streamlit==1.41.1 \
-    gradio==5.8.0
+    gradio==5.8.0 \
+    pydantic==2.10.5
 
 # fix The Poetry configuration is invalid miss name of project
 # https://github.com/HumanSignal/label-studio-sdk/pull/380
