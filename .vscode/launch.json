@@ -313,6 +313,15 @@
                 "INLINE_MATH_MODEL_CHECKPOINT": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--inline_math_det0/snapshots/75aafc7aa3d494ece6496d28038c91f0d2518a43"
             },
             "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya-s3-model-download",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/cache/surya-s3-model-download.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/cache",
+            "justMyCode": false
         }
     ]
 }
