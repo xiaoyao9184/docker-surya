@@ -1,5 +1,5 @@
 torch==2.5.1
-surya-ocr==0.12.0
+surya-ocr==0.12.1
 gradio==5.8.0
 huggingface-hub==0.26.3
 # gradio app need pdftext for run_ocr_errors
