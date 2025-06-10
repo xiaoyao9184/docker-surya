@@ -63,11 +63,21 @@ def run_ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pag
     return label, results.labels
 
 # just copy from streamlit_app.py
+def inline_detection(img) -> (Image.Image, TextDetectionResult):
+    text_pred = predictors["detection"]([img])[0]
+    text_boxes = [p.bbox for p in text_pred.bboxes]
+
+    inline_pred = predictors["inline_detection"]([img], [text_boxes], include_maps=True)[0]
+    inline_polygons = [p.polygon for p in inline_pred.bboxes]
+    det_img = draw_polys_on_image(inline_polygons, img.copy(), color='blue')
+    return det_img, text_pred, inline_pred
+
+# just copy from streamlit_app.py `name 'inline_pred' is not defined`
 def text_detection(img) -> (Image.Image, TextDetectionResult):
-    pred = predictors["detection"]([img])[0]
-    polygons = [p.polygon for p in pred.bboxes]
-    det_img = draw_polys_on_image(polygons, img.copy())
-    return det_img, pred
+    text_pred = predictors["detection"]([img])[0]
+    text_polygons = [p.polygon for p in text_pred.bboxes]
+    det_img = draw_polys_on_image(text_polygons, img.copy())
+    return det_img, text_pred #, inline_pred
 
 # just copy from streamlit_app.py
 def layout_detection(img) -> (Image.Image, LayoutResult):
@@ -178,6 +188,7 @@ with gr.Blocks(title="Surya") as demo:
             in_img = gr.Image(label="Select page of Image", type="pil", sources=None)
 
             text_det_btn = gr.Button("Run Text Detection")
+            inline_det_btn = gr.Button("Run Inline Math Detection")
             layout_det_btn = gr.Button("Run Layout Analysis")
 
             lang_dd = gr.Dropdown(label="Languages", choices=sorted(list(CODE_TO_LANGUAGE.values())), multiselect=True, max_choices=4, info="Select the languages in the image (if known) to improve OCR accuracy.  Optional.")
@@ -218,13 +229,27 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run Text Detection
         def text_det_img(pil_image):
-            det_img, pred = text_detection(pil_image)
-            return det_img, pred.model_dump(exclude=["heatmap", "affinity_map"])
+            det_img, text_pred = text_detection(pil_image)
+            return det_img, text_pred.model_dump(exclude=["heatmap", "affinity_map"])
         text_det_btn.click(
             fn=text_det_img,
             inputs=[in_img],
             outputs=[result_img, result_json]
         )
+        def inline_det_img(pil_image):
+            det_img, text_pred, inline_pred = inline_detection(pil_image)
+            json = {
+                "text": text_pred.model_dump(exclude=["heatmap", "affinity_map"]),
+                "inline": inline_pred.model_dump(exclude=["heatmap", "affinity_map"])
+            }
+            return det_img, json
+        inline_det_btn.click(
+            fn=inline_det_img,
+            inputs=[in_img],
+            outputs=[result_img, result_json]
+        )
+
+
         # Run layout
         def layout_det_img(pil_image):
             layout_img, pred = layout_detection(pil_image)
