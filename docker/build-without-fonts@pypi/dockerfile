@@ -24,6 +24,7 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install --no-cache-dir \
     surya-ocr==${SURYA_VERSION} \
+    transformers==4.48.1 \
     streamlit==${STREAMLIT_VERSION} \
     gradio==${GRADIO_VERSION} \
     gunicorn==22.0.0 \

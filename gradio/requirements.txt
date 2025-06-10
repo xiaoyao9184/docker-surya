@@ -2,3 +2,6 @@ torch==2.5.1
 surya-ocr==0.9.0
 gradio==5.8.0
 huggingface-hub==0.26.3
+
+# fix compatibility issue keep same with poetry lock file
+transformers==4.48.1

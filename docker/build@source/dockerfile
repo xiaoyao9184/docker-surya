@@ -26,6 +26,7 @@ RUN pip3 install --upgrade pip
 COPY ./surya /app
 RUN pip3 install --no-cache-dir \
     -e . \
+    transformers==4.48.1 \
     streamlit==1.41.1 \
     gradio==5.8.0
 
