@@ -1,4 +1,4 @@
-torch==2.5.1
+torch==2.7.0
 surya-ocr==0.14.2
 gradio==5.8.0
 huggingface-hub==0.26.3
