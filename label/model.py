@@ -7,7 +7,6 @@ from uuid import uuid4
 
 from surya.detection import DetectionPredictor
 from surya.recognition import RecognitionPredictor
-from surya.recognition.languages import replace_lang_with_code
 
 from PIL import Image
 
@@ -103,14 +102,12 @@ class SuryaOCR(LabelStudioMLBase):
 
         # run ocr
         img_pil = Image.open(image_path).convert("RGB")
-        langs = self.LANG_LIST.copy()
-        replace_lang_with_code(langs)
-
         predictions_by_image = rec_predictor(
             [img_pil],
-            [langs],
             det_predictor=det_predictor,
-            highres_images=[img_pil]
+            highres_images=[img_pil],
+            math_mode=False,
+            return_words=True
         )
 
         model_results = predictions_by_image[0]
