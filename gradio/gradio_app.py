@@ -230,6 +230,7 @@ with gr.Blocks(title="Surya") as demo:
             in_num = gr.Slider(label="Page number", minimum=1, maximum=100, value=1, step=1)
             in_img = gr.Image(label="Select page of Image", type="pil", sources=None)
 
+            ocr_errors_btn = gr.Button("Run bad PDF text detection")
             text_det_btn = gr.Button("Run Text Detection")
             layout_det_btn = gr.Button("Run Layout Analysis")
 
@@ -240,12 +241,28 @@ with gr.Blocks(title="Surya") as demo:
 
             skip_table_detection_ckb = gr.Checkbox(label="Skip table detection", value=False, info="Table recognition only: Skip table detection and treat the whole image/page as a table.")
             table_rec_btn = gr.Button("Run Table Rec")
-
-            ocr_errors_btn = gr.Button("Run bad PDF text detection")
         with gr.Column():
-            result_img = gr.Image(label="Result image")
+            result_img = gr.Gallery(label="Result images", show_label=True, 
+                elem_id="gallery", columns=[1], rows=[2], object_fit="contain", height="auto")
+
+            gr.HTML("""
+            <style>
+            #gallery {
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            #gallery .gallery-item {
+                flex-direction: column !important;
+            }
+            #gallery .gallery-item img {
+                width: 100% !important;
+                height: auto !important;
+                object-fit: contain !important;
+            }
+            </style>
+            """)
             result_json = gr.JSON(label="Result json")
-            ocr_boxes_img = gr.Image(label="OCR boxes image")
 
         def show_image(file, num=1):
             if file.endswith('.pdf'):
@@ -273,8 +290,12 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run Text Detection
         def text_det_img(pil_image):
-            det_img, text_pred = text_detection(pil_image)
-            return det_img, text_pred.model_dump(exclude=["heatmap", "affinity_map"])
+            det_img, pred = text_detection(pil_image)
+            det_json = pred.model_dump(exclude=["heatmap", "affinity_map"])
+            return (
+                gr.update(label="Result image: text detected", value=[det_img], rows=[1], height=det_img.height),
+                gr.update(label="Result json: " + str(len(det_json['bboxes'])) + " text boxes detected", value=det_json)
+            )
         text_det_btn.click(
             fn=text_det_img,
             inputs=[in_img],
@@ -284,7 +305,11 @@ with gr.Blocks(title="Surya") as demo:
         # Run layout
         def layout_det_img(pil_image):
             layout_img, pred = layout_detection(pil_image)
-            return layout_img, pred.model_dump(exclude=["segmentation_map"])
+            layout_json = pred.model_dump(exclude=["segmentation_map"])
+            return (
+                gr.update(label="Result image: layout detected", value=[layout_img], rows=[1], height=layout_img.height),
+                gr.update(label="Result json: " + str(len(layout_json['bboxes'])) + " layout labels detected", value=layout_json)
+            )
         layout_det_btn.click(
             fn=layout_det_img,
             inputs=[in_img],
@@ -304,11 +329,16 @@ with gr.Blocks(title="Surya") as demo:
                 recognize_math,
                 with_bboxes=ocr_with_boxes,
             )
-            return rec_img, pred.model_dump(), box_img
+            text_img = [(rec_img, "Text"), (box_img, "Boxes")]
+            text_json = pred.model_dump()
+            return (
+                gr.update(label="Result image: text recognized", value=text_img, rows=[2], height=rec_img.height + box_img.height),
+                gr.update(label="Result json: " + str(len(text_json['text_lines'])) + " text lines recognized", value=text_json)
+            )
         text_rec_btn.click(
             fn=text_rec_img,
             inputs=[in_img, in_file, in_num, skip_text_detection_ckb, recognize_math_ckb, ocr_with_boxes_ckb],
-            outputs=[result_img, result_json, ocr_boxes_img]
+            outputs=[result_img, result_json]
         )
 
         # Run Table Recognition
@@ -318,7 +348,11 @@ with gr.Blocks(title="Surya") as demo:
             else:
                 pil_image_highres = pil_image
             table_img, pred = table_recognition(pil_image, pil_image_highres, skip_table_detection)
-            return table_img, [p.model_dump() for p in pred]
+            table_json = [p.model_dump() for p in pred]
+            return (
+                gr.update(label="Result image: table recognized", value=[table_img], rows=[1], height=table_img.height),
+                gr.update(label="Result json: " + str(len(table_json)) + " table tree recognized", value=table_json)
+            )
         table_rec_btn.click(
             fn=table_rec_img,
             inputs=[in_img, in_file, in_num, skip_table_detection_ckb],
@@ -331,12 +365,15 @@ with gr.Blocks(title="Surya") as demo:
                 raise gr.Error("This feature only works with PDFs.", duration=5)
             page_count = page_counter(in_file)
             io_file = io.BytesIO(open(in_file.name, "rb").read())
-            label, results = ocr_errors(io_file, page_count)
-            return gr.update(label="Result json:" + label, value=results)
+            layout_label, layout_json = ocr_errors(io_file, page_count)
+            return (
+                gr.update(label="Result image: NONE", value=None),
+                gr.update(label="Result json: " + layout_label, value=layout_json)
+            )
         ocr_errors_btn.click(
             fn=ocr_errors_pdf,
             inputs=[in_file],
-            outputs=[result_json]
+            outputs=[result_img, result_json]
         )
 
 if __name__ == "__main__":
