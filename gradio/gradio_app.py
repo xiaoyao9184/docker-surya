@@ -16,14 +16,13 @@ from typing import List
 import pypdfium2
 import gradio as gr
 
+from surya.common.surya.schema import TaskNames
 from surya.models import load_predictors
 
 from surya.debug.draw import draw_polys_on_image, draw_bboxes_on_image
 
 from surya.debug.text import draw_text_on_image
-
-from PIL import Image
-from surya.recognition.languages import CODE_TO_LANGUAGE, replace_lang_with_code
+from PIL import Image, ImageDraw
 from surya.table_rec import TableResult
 from surya.detection import TextDetectionResult
 from surya.recognition import OCRResult
@@ -33,15 +32,18 @@ from surya.common.util import rescale_bbox, expand_bbox
 
 
 # just copy from streamlit_app.py
-def run_ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pages=15):
+def ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pages=15):
     from pdftext.extraction import plain_text_output
+
     with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
         f.write(pdf_file.getvalue())
         f.seek(0)
 
         # Sample the text from the middle of the PDF
         page_middle = page_count // 2
-        page_range = range(max(page_middle - max_pages, 0), min(page_middle + max_pages, page_count))
+        page_range = range(
+            max(page_middle - max_pages, 0), min(page_middle + max_pages, page_count)
+        )
         text = plain_text_output(f.name, page_range=page_range)
 
     sample_gap = len(text) // max_samples
@@ -54,23 +56,13 @@ def run_ocr_errors(pdf_file, page_count, sample_len=512, max_samples=10, max_pag
     # Split the text into samples for the model
     samples = []
     for i in range(0, len(text), sample_gap):
-        samples.append(text[i:i + sample_len])
+        samples.append(text[i : i + sample_len])
 
     results = predictors["ocr_error"](samples)
     label = "This PDF has good text."
-    if results.labels.count("bad") / len(results.labels) > .2:
+    if results.labels.count("bad") / len(results.labels) > 0.2:
         label = "This PDF may have garbled or bad OCR text."
     return label, results.labels
-
-# just copy from streamlit_app.py
-def inline_detection(img) -> (Image.Image, TextDetectionResult):
-    text_pred = predictors["detection"]([img])[0]
-    text_boxes = [p.bbox for p in text_pred.bboxes]
-
-    inline_pred = predictors["inline_detection"]([img], [text_boxes], include_maps=True)[0]
-    inline_polygons = [p.polygon for p in inline_pred.bboxes]
-    det_img = draw_polys_on_image(inline_polygons, img.copy(), color='blue')
-    return det_img, text_pred, inline_pred
 
 # just copy from streamlit_app.py
 def text_detection(img) -> (Image.Image, TextDetectionResult):
@@ -83,27 +75,35 @@ def text_detection(img) -> (Image.Image, TextDetectionResult):
 def layout_detection(img) -> (Image.Image, LayoutResult):
     pred = predictors["layout"]([img])[0]
     polygons = [p.polygon for p in pred.bboxes]
-    labels = [f"{p.label}-{p.position}" for p in pred.bboxes]
-    layout_img = draw_polys_on_image(polygons, img.copy(), labels=labels, label_font_size=18)
+    labels = [
+        f"{p.label}-{p.position}-{round(p.top_k[p.label], 2)}" for p in pred.bboxes
+    ]
+    layout_img = draw_polys_on_image(
+        polygons, img.copy(), labels=labels, label_font_size=18
+    )
     return layout_img, pred
 
 # just copy from streamlit_app.py
-def table_recognition(img, highres_img, skip_table_detection: bool) -> (Image.Image, List[TableResult]):
+def table_recognition(
+    img, highres_img, skip_table_detection: bool
+) -> (Image.Image, List[TableResult]):
     if skip_table_detection:
         layout_tables = [(0, 0, highres_img.size[0], highres_img.size[1])]
         table_imgs = [highres_img]
     else:
         _, layout_pred = layout_detection(img)
-        layout_tables_lowres = [l.bbox for l in layout_pred.bboxes if l.label in ["Table", "TableOfContents"]]
+        layout_tables_lowres = [
+            line.bbox
+            for line in layout_pred.bboxes
+            if line.label in ["Table", "TableOfContents"]
+        ]
         table_imgs = []
         layout_tables = []
         for tb in layout_tables_lowres:
             highres_bbox = rescale_bbox(tb, img.size, highres_img.size)
             # Slightly expand the box
             highres_bbox = expand_bbox(highres_bbox)
-            table_imgs.append(
-                highres_img.crop(highres_bbox)
-            )
+            table_imgs.append(highres_img.crop(highres_bbox))
             layout_tables.append(highres_bbox)
 
     table_preds = predictors["table_rec"](table_imgs)
@@ -115,29 +115,72 @@ def table_recognition(img, highres_img, skip_table_detection: bool) -> (Image.Im
         colors = []
 
         for item in results.cells:
-            adjusted_bboxes.append([
-                (item.bbox[0] + table_bbox[0]),
-                (item.bbox[1] + table_bbox[1]),
-                (item.bbox[2] + table_bbox[0]),
-                (item.bbox[3] + table_bbox[1])
-            ])
+            adjusted_bboxes.append(
+                [
+                    (item.bbox[0] + table_bbox[0]),
+                    (item.bbox[1] + table_bbox[1]),
+                    (item.bbox[2] + table_bbox[0]),
+                    (item.bbox[3] + table_bbox[1]),
+                ]
+            )
             labels.append(item.label)
             if "Row" in item.label:
                 colors.append("blue")
             else:
                 colors.append("red")
-        table_img = draw_bboxes_on_image(adjusted_bboxes, highres_img, labels=labels, label_font_size=18, color=colors)
+        table_img = draw_bboxes_on_image(
+            adjusted_bboxes,
+            highres_img,
+            labels=labels,
+            label_font_size=18,
+            color=colors,
+        )
     return table_img, table_preds
 
 # just copy from streamlit_app.py
-def ocr(img, highres_img, langs: List[str]) -> (Image.Image, OCRResult):
-    replace_lang_with_code(langs)
-    img_pred = predictors["recognition"]([img], [langs], predictors["detection"], highres_images=[highres_img])[0]
+def ocr(
+    img: Image.Image,
+    highres_img: Image.Image,
+    skip_text_detection: bool = False,
+    recognize_math: bool = True,
+    with_bboxes: bool = True,
+) -> (Image.Image, OCRResult):
+    if skip_text_detection:
+        img = highres_img
+        bboxes = [[[0, 0, img.width, img.height]]]
+    else:
+        bboxes = None
 
-    bboxes = [l.bbox for l in img_pred.text_lines]
-    text = [l.text for l in img_pred.text_lines]
-    rec_img = draw_text_on_image(bboxes, text, img.size, langs)
-    return rec_img, img_pred
+    if with_bboxes:
+        tasks = [TaskNames.ocr_with_boxes]
+    else:
+        tasks = [TaskNames.ocr_without_boxes]
+
+    img_pred = predictors["recognition"](
+        [img],
+        task_names=tasks,
+        bboxes=bboxes,
+        det_predictor=predictors["detection"],
+        highres_images=[highres_img],
+        math_mode=recognize_math,
+        return_words=True,
+    )[0]
+
+    bboxes = [line.bbox for line in img_pred.text_lines]
+    text = [line.text for line in img_pred.text_lines]
+    rec_img = draw_text_on_image(bboxes, text, img.size)
+
+    word_boxes = []
+    for line in img_pred.text_lines:
+        if line.words:
+            word_boxes.extend([word.bbox for word in line.words])
+
+    box_img = img.copy()
+    draw = ImageDraw.Draw(box_img)
+    for word_box in word_boxes:
+        draw.rectangle(word_box, outline="red", width=2)
+
+    return rec_img, img_pred, box_img
 
 def open_pdf(pdf_file):
     return pypdfium2.PdfDocument(pdf_file)
@@ -188,13 +231,13 @@ with gr.Blocks(title="Surya") as demo:
             in_img = gr.Image(label="Select page of Image", type="pil", sources=None)
 
             text_det_btn = gr.Button("Run Text Detection")
-            inline_det_btn = gr.Button("Run Inline Math Detection")
             layout_det_btn = gr.Button("Run Layout Analysis")
 
-            lang_dd = gr.Dropdown(label="Languages", choices=sorted(list(CODE_TO_LANGUAGE.values())), multiselect=True, max_choices=4, info="Select the languages in the image (if known) to improve OCR accuracy.  Optional.")
+            skip_text_detection_ckb = gr.Checkbox(label="Skip text detection", value=False, info="OCR only: Skip text detection and treat the whole image as a single line.")
+            recognize_math_ckb = gr.Checkbox(label="Recognize math in OCR", value=True, info="Enable math mode in OCR - this will recognize math.")
+            ocr_with_boxes_ckb = gr.Checkbox(label="OCR with boxes", value=True, info="Enable OCR with boxes - this will predict character-level boxes.")
             text_rec_btn = gr.Button("Run OCR")
 
-            use_pdf_boxes_ckb = gr.Checkbox(label="Use PDF table boxes", value=True, info="Table recognition only: Use the bounding boxes from the PDF file vs text detection model.")
             skip_table_detection_ckb = gr.Checkbox(label="Skip table detection", value=False, info="Table recognition only: Skip table detection and treat the whole image/page as a table.")
             table_rec_btn = gr.Button("Run Table Rec")
 
@@ -202,6 +245,7 @@ with gr.Blocks(title="Surya") as demo:
         with gr.Column():
             result_img = gr.Image(label="Result image")
             result_json = gr.JSON(label="Result json")
+            ocr_boxes_img = gr.Image(label="OCR boxes image")
 
         def show_image(file, num=1):
             if file.endswith('.pdf'):
@@ -236,19 +280,6 @@ with gr.Blocks(title="Surya") as demo:
             inputs=[in_img],
             outputs=[result_img, result_json]
         )
-        def inline_det_img(pil_image):
-            det_img, text_pred, inline_pred = inline_detection(pil_image)
-            json = {
-                "text": text_pred.model_dump(exclude=["heatmap", "affinity_map"]),
-                "inline": inline_pred.model_dump(exclude=["heatmap", "affinity_map"])
-            }
-            return det_img, json
-        inline_det_btn.click(
-            fn=inline_det_img,
-            inputs=[in_img],
-            outputs=[result_img, result_json]
-        )
-
 
         # Run layout
         def layout_det_img(pil_image):
@@ -259,21 +290,29 @@ with gr.Blocks(title="Surya") as demo:
             inputs=[in_img],
             outputs=[result_img, result_json]
         )
+
         # Run OCR
-        def text_rec_img(pil_image, in_file, page_number, languages):
+        def text_rec_img(pil_image, in_file, page_number, skip_text_detection, recognize_math, ocr_with_boxes):
             if in_file.endswith('.pdf'):
                 pil_image_highres = get_page_image(in_file, page_number, dpi=settings.IMAGE_DPI_HIGHRES)
             else:
                 pil_image_highres = pil_image
-            rec_img, pred = ocr(pil_image, pil_image_highres, languages)
-            return rec_img, pred.model_dump()
+            rec_img, pred, box_img = ocr(
+                pil_image,
+                pil_image_highres,
+                skip_text_detection,
+                recognize_math,
+                with_bboxes=ocr_with_boxes,
+            )
+            return rec_img, pred.model_dump(), box_img
         text_rec_btn.click(
             fn=text_rec_img,
-            inputs=[in_img, in_file, in_num, lang_dd],
-            outputs=[result_img, result_json]
+            inputs=[in_img, in_file, in_num, skip_text_detection_ckb, recognize_math_ckb, ocr_with_boxes_ckb],
+            outputs=[result_img, result_json, ocr_boxes_img]
         )
+
         # Run Table Recognition
-        def table_rec_img(pil_image, in_file, page_number, use_pdf_boxes, skip_table_detection):
+        def table_rec_img(pil_image, in_file, page_number, skip_table_detection):
             if in_file.endswith('.pdf'):
                 pil_image_highres = get_page_image(in_file, page_number, dpi=settings.IMAGE_DPI_HIGHRES)
             else:
@@ -282,20 +321,21 @@ with gr.Blocks(title="Surya") as demo:
             return table_img, [p.model_dump() for p in pred]
         table_rec_btn.click(
             fn=table_rec_img,
-            inputs=[in_img, in_file, in_num, use_pdf_boxes_ckb, skip_table_detection_ckb],
+            inputs=[in_img, in_file, in_num, skip_table_detection_ckb],
             outputs=[result_img, result_json]
         )
+
         # Run bad PDF text detection
-        def ocr_errors_pdf(file, page_count, sample_len=512, max_samples=10, max_pages=15):
-            if file.endswith('.pdf'):
-                count = page_counter(file)
-            else:
+        def ocr_errors_pdf(in_file):
+            if not in_file.endswith('.pdf'):
                 raise gr.Error("This feature only works with PDFs.", duration=5)
-            label, results = run_ocr_errors(io.BytesIO(open(file.name, "rb").read()), count)
+            page_count = page_counter(in_file)
+            io_file = io.BytesIO(open(in_file.name, "rb").read())
+            label, results = ocr_errors(io_file, page_count)
             return gr.update(label="Result json:" + label, value=results)
         ocr_errors_btn.click(
             fn=ocr_errors_pdf,
-            inputs=[in_file, in_num, use_pdf_boxes_ckb, skip_table_detection_ckb],
+            inputs=[in_file],
             outputs=[result_json]
         )
 
