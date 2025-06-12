@@ -78,12 +78,12 @@ def test_predict(client, model_dir_env):
     assert response.status_code == 200
     response = json.loads(response.data)
     expected_texts = [
-        '<b>IZIN SOLUTIONS</b>',
+        'IZIN SOLUTIONS',
         'KENAPA',
-        '<b>HARUS</b>',
+        'HARUS',
         'PUNYA',
-        '<b>IMB</b>',
-        'Swipe <math>\\rightarrow</math>',
+        'IMB2',
+        'Swipe →',
         'Kenapa Harus Punya IMB?'
     ]
     texts_response = []

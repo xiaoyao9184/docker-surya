@@ -132,6 +132,8 @@ class SuryaOCR(LabelStudioMLBase):
                     continue
                 rel_pnt.append([(rp[0] / img_width) * 100, (rp[1] / img_height) * 100])
 
+            text = ''.join(char.text for char in line.chars if char.bbox_valid)
+
             # must add one for the polygon
             id_gen = str(uuid4())[:4]
             result.append({
@@ -156,7 +158,7 @@ class SuryaOCR(LabelStudioMLBase):
                 'value': {
                     'points': rel_pnt,
                     'labels': [label],
-                    "text": [line.text]
+                    "text": [text]
                 },
                 'id': id_gen,
                 'from_name': from_name_trans,
