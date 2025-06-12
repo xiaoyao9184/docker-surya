@@ -6,6 +6,8 @@ on:
     branches:
       - 'master'
     paths:
+      - label
+      - gradio
       - docker/build@pypi/dockerfile
       - .github/workflows/docker-image-tag-version.yml
   workflow_dispatch:
