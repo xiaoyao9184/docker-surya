@@ -15,6 +15,8 @@ from typing import List
 
 import pypdfium2
 import gradio as gr
+import requests
+from contextlib import suppress
 
 from surya.common.surya.schema import TaskNames
 from surya.models import load_predictors
@@ -221,7 +223,9 @@ with gr.Blocks(title="Surya") as demo:
     - If OCR doesn't work, try changing the resolution of your image (increase if below 2048px width, otherwise decrease).
     - This supports 90+ languages, see [here](https://github.com/VikParuchuri/surya/tree/master/surya/languages.py) for a full list.
 
-    Find the project [here](https://github.com/VikParuchuri/surya).
+    Find the original project [here](https://github.com/VikParuchuri/surya).
+    Or this project [here](https://github.com/xiaoyao9184/docker-surya).
+    See the [README](./blob/main/README.md) for Spaces's metadata.
     """)
 
     with gr.Row():
@@ -290,6 +294,10 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run Text Detection
         def text_det_img(pil_image):
+            # update counter
+            with suppress(Exception):
+                requests.get("https://counterapi.com/api/xiaoyao9184.github.com/view/docker-surya")
+
             det_img, pred = text_detection(pil_image)
             det_json = pred.model_dump(exclude=["heatmap", "affinity_map"])
             return (
@@ -304,6 +312,10 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run layout
         def layout_det_img(pil_image):
+            # update counter
+            with suppress(Exception):
+                requests.get("https://counterapi.com/api/xiaoyao9184.github.com/view/docker-surya")
+
             layout_img, pred = layout_detection(pil_image)
             layout_json = pred.model_dump(exclude=["segmentation_map"])
             return (
@@ -318,6 +330,10 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run OCR
         def text_rec_img(pil_image, in_file, page_number, skip_text_detection, recognize_math, ocr_with_boxes):
+            # update counter
+            with suppress(Exception):
+                requests.get("https://counterapi.com/api/xiaoyao9184.github.com/view/docker-surya")
+
             if in_file.endswith('.pdf'):
                 pil_image_highres = get_page_image(in_file, page_number, dpi=settings.IMAGE_DPI_HIGHRES)
             else:
@@ -343,6 +359,9 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run Table Recognition
         def table_rec_img(pil_image, in_file, page_number, skip_table_detection):
+            # update counter
+            with suppress(Exception):
+                requests.get("https://counterapi.com/api/xiaoyao9184.github.com/view/docker-surya")
             if in_file.endswith('.pdf'):
                 pil_image_highres = get_page_image(in_file, page_number, dpi=settings.IMAGE_DPI_HIGHRES)
             else:
@@ -361,6 +380,10 @@ with gr.Blocks(title="Surya") as demo:
 
         # Run bad PDF text detection
         def ocr_errors_pdf(in_file):
+            # update counter
+            with suppress(Exception):
+                requests.get("https://counterapi.com/api/xiaoyao9184.github.com/view/docker-surya")
+
             if not in_file.endswith('.pdf'):
                 raise gr.Error("This feature only works with PDFs.", duration=5)
             page_count = page_counter(in_file)
