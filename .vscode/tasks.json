@@ -31,9 +31,9 @@
             "command": "docker build -t xiaoyao9184/surya:master -f ./docker/build@source/dockerfile .",
         },
         {
-            "label": "docker: build 0.15.0",
+            "label": "docker: build 0.15.1",
             "type": "shell",
-            "command": "docker build -t xiaoyao9184/surya:0.15.0 -f ./docker/build@pypi/dockerfile .",
+            "command": "docker build -t xiaoyao9184/surya:0.15.1 -f ./docker/build@pypi/dockerfile .",
         },
         {
             "label": "huggingface-cli: download models",
