@@ -15,7 +15,7 @@ on:
       surya_version:
         description: surya version of pypi
         required: true
-        default: 0.16.1
+        default: 0.16.2
       streamlit_version:
         description: streamlit version of pypi
         required: true
@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         SURYA_VERSION:
-          - ${{ github.event.inputs.surya_version || '0.16.1' }}
+          - ${{ github.event.inputs.surya_version || '0.16.2' }}
         STREAMLIT_VERSION:
           - ${{ github.event.inputs.streamlit_version || '1.40.2' }}
         platform:
