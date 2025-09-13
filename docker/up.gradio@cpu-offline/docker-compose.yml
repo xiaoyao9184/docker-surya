@@ -2,7 +2,7 @@
 
 services:
   surya_gradio:
-    image: xiaoyao9184/surya:0.16.3
+    image: xiaoyao9184/surya:0.16.4
     container_name: surya_ocr_gradio
     working_dir: /workspace/gradio
     command: gradio gradio_app.py

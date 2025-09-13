@@ -2,7 +2,7 @@
 
 services:
   surya_app:
-    image: xiaoyao9184/surya:0.16.3
+    image: xiaoyao9184/surya:0.16.4
     container_name: surya_ocr_app
     environment:
       - TORCH_DEVICE=cpu
