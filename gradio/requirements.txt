@@ -1,5 +1,5 @@
 torch==2.7.0
-surya-ocr==0.17.0
+surya-ocr==0.17.1
 gradio==5.8.0
 
 # transformers 4.56.1 depends on huggingface-hub>=0.34.0
