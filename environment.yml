@@ -14,6 +14,8 @@ dependencies:
 
   - pip:
     - -e ./surya
+    # lock version for import `transformers.onnx`
+    - transformers==4.56.1
     # streamlit app need pdftext for run_ocr_errors
     - pdftext==0.5.0
     # texify_app need streamlit-drawable-canvas-jsretry for st_canvas
