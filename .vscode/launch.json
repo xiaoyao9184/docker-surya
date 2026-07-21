@@ -17,7 +17,6 @@
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
             },
             "justMyCode": false
         },
@@ -38,7 +37,6 @@
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
             },
             "justMyCode": false
         },
@@ -76,9 +74,6 @@
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
-                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/layout/2025_09_23",
-                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/table_recognition/2025_02_18",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
             },
             "justMyCode": false
@@ -115,9 +110,6 @@
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
-                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/layout/2025_09_23",
-                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/table_recognition/2025_02_18",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
             },
             "justMyCode": false
@@ -148,7 +140,6 @@
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
             },
             "justMyCode": false
         },
@@ -206,7 +197,6 @@
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
-                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/layout/2025_09_23",
             },
             "justMyCode": false
         },
@@ -235,8 +225,6 @@
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
-                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/table_recognition/2025_02_18",
-                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/layout/2025_09_23",
             },
             "justMyCode": false
         },
@@ -265,7 +253,6 @@
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
             },
             "justMyCode": false
         },
@@ -301,27 +288,24 @@
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "FOUNDATION_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_recognition/2025_09_23",
-                "LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/layout/2025_09_23",
-                "TABLE_REC_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/table_recognition/2025_02_18",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
             },
             "justMyCode": false
         },
         {
-            "name": "debugpy: surya-s3-model-download",
+            "name": "debugpy: s3-model-download",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/cache/surya-s3-model-download.py",
+            "program": "${workspaceFolder}/cache/s3-model-download.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/cache",
             "justMyCode": false
         },
         {
-            "name": "debugpy: hf-s3-model-upload",
+            "name": "debugpy: hf-model-upload",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/cache/hf-s3-model-upload.py",
+            "program": "${workspaceFolder}/cache/hf-model-upload.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/cache",
             "justMyCode": false

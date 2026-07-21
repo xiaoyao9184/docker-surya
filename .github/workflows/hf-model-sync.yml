@@ -52,7 +52,7 @@ jobs:
 
       - name: Download models from s3
         working-directory: ./cache
-        run: ${{ steps.poetry-env.outputs.VENV }}/bin/python surya-s3-model-download.py
+        run: ${{ steps.poetry-env.outputs.VENV }}/bin/python s3-model-download.py
 
       - name: Log in to Hugging Face CLI
         run: hf auth login --token ${{ secrets.HF_TOKEN }}
@@ -60,12 +60,9 @@ jobs:
       - name: Upload models to Hugging Face
         env:
           DETECTOR_MODEL_REPO_ID: "${{ secrets.HF_USERNAME }}/surya_text_detection"
-          RECOGNITION_MODEL_REPO_ID: "${{ secrets.HF_USERNAME }}/surya_text_recognition"
-          LAYOUT_MODEL_REPO_ID: "${{ secrets.HF_USERNAME }}/surya_layout"
-          TABLE_REC_MODEL_REPO_ID: "${{ secrets.HF_USERNAME }}/surya_table_recognition"
           OCR_ERROR_MODEL_REPO_ID: "${{ secrets.HF_USERNAME }}/surya_ocr_error_detection"
         working-directory: ./cache
-        run: ${{ steps.poetry-env.outputs.VENV }}/bin/python hf-s3-model-upload.py
+        run: ${{ steps.poetry-env.outputs.VENV }}/bin/python hf-model-upload.py
 
       - name: Log out from Hugging Face CLI
         if: always()
