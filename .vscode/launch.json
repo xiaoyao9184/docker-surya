@@ -96,7 +96,7 @@
             "env": {
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
+                "HF_ENDPOINT": "http://developer.lan:8090"
             },
             "justMyCode": false
         },
