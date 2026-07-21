@@ -41,8 +41,24 @@ When setting the labeling configuration, select the **Computer Vision > Optical 
   <Image name="image" value="$image"/>
 
   <Labels name="label" toName="image">
-    <Label value="Text" background="green"/>
-    <Label value="Handwriting" background="blue"/>
+    <Label value="Caption" background="#4E79A7"/>
+    <Label value="Footnote" background="#F28E2B"/>
+    <Label value="Equation" background="#E15759"/>
+    <Label value="ListGroup" background="#76B7B2"/>
+    <Label value="PageHeader" background="#59A14F"/>
+    <Label value="PageFooter" background="#EDC948"/>
+    <Label value="Picture" background="#B07AA1"/>
+    <Label value="SectionHeader" background="#FF9DA7"/>
+    <Label value="Table" background="#9C755F"/>
+    <Label value="Text" background="#BAB0AC"/>
+    <Label value="Figure" background="#1F77B4"/>
+    <Label value="Code" background="#FF7F0E"/>
+    <Label value="Form" background="#2CA02C"/>
+    <Label value="TableOfContents" background="#D62728"/>
+    <Label value="ChemicalBlock" background="#9467BD"/>
+    <Label value="Diagram" background="#8C564B"/>
+    <Label value="Bibliography" background="#E377C2"/>
+    <Label value="BlankPage" background="#7F7F7F"/>
   </Labels>
 
   <Rectangle name="bbox" toName="image" strokeWidth="3"/>
@@ -69,7 +85,7 @@ When setting the labeling configuration, select the **Computer Vision > Optical 
 1. Start the Machine Learning backend on `http://localhost:9090` with the prebuilt image:
 
 ```bash
-cd docker/up.label@gpu-online
+cd docker/up.label@gpu
 docker-compose up
 ```
 

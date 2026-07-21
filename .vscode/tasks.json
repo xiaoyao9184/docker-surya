@@ -72,7 +72,7 @@
             "problemMatcher": []
         },
         {
-            "label": "conda: label-studio-ml start",
+            "label": "conda: start label-studio-ml",
             "type": "shell",
             "options": {
                 "cwd": "${workspaceFolder}/",
@@ -82,7 +82,8 @@
                     // "HF_ENDPOINT": "https://hf-mirror.com",
                     // "HF_HUB_ETAG_TIMEOUT": "1000",
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
-                    "XDG_CACHE_HOME": "${workspaceFolder}/cache"
+                    "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 }
             },
             "command": [
@@ -91,7 +92,7 @@
             "problemMatcher": []
         },
         {
-            "label": "conda: gradio gradio_app",
+            "label": "conda: run gradio_app",
             "type": "shell",
             "options": {
                 "cwd": "${workspaceFolder}/",
@@ -99,7 +100,8 @@
                     // "HF_ENDPOINT": "https://hf-mirror.com",
                     // "HF_HUB_ETAG_TIMEOUT": "1000",
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
-                    "XDG_CACHE_HOME": "${workspaceFolder}/cache"
+                    "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 }
             },
             "command": [
@@ -118,6 +120,7 @@
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
                     "STREAMLIT_SERVER_PORT": "8501",
                     "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 },
             },
             "command": [
@@ -128,9 +131,8 @@
             "label": "conda: create env",
             "type": "shell",
             "command": [
-                "git config --global url.'https://github.com/xiaoyao9184/label-studio-sdk'.insteadOf 'https://github.com/HumanSignal/label-studio-sdk'",
-                "&& conda env create -f ./environment.yml",
-                "&& git config --global --unset url.'https://github.com/xiaoyao9184/label-studio-sdk'.insteadOf"
+                "conda env create -f ./environment.yml",
+                "&& conda run --no-capture-output -n surya pip install --no-deps git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml"
             ]
         }
     ]

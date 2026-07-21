@@ -1,2 +1,10 @@
 gunicorn==22.0.0
-label-studio-ml @ git+https://github.com/HumanSignal/label-studio-ml-backend.git
+# label-studio-ml depends on the latest label-studio-sdk source code,
+# but only label-studio-sdk version 1.0.18 can coexist with Surya.
+# The following are the dependency projects of label-studio-ml.
+# label-studio-ml @ git+https://github.com/HumanSignal/label-studio-ml-backend.git
+Flask>2.3
+colorama~=0.4
+requests~=2.31
+semver~=3.0.2
+label-studio-sdk==1.0.18

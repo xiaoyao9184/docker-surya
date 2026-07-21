@@ -2,26 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "debugpy: label_wsgi test",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "pytest",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}/label",
-            "args": [
-                "${workspaceFolder}/label/test_api.py"
-            ],
-            "env": {
-                // "LABEL_STUDIO_URL": "http://localhost:8080",
-                // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: label_wsgi offline",
+            "name": "debugpy: label_wsgi server",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/label/_wsgi.py",
@@ -32,16 +13,35 @@
                 "-p", "9090"
             ],
             "env": {
-                // "LABEL_STUDIO_URL": "http://localhost:8080",
-                // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
+                "LABEL_STUDIO_URL": "http://192.168.1.18:8080",
+                "LABEL_STUDIO_API_KEY": "label-token",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
         },
         {
-            "name": "debugpy: gradio_run mirror",
+            "name": "debugpy: label_wsgi test",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/label",
+            "args": [
+                "${workspaceFolder}/label/test_api.py"
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: gradio_app server",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/gradio/gradio_run.py",
@@ -54,241 +54,118 @@
                 "APP_PATH": "${workspaceFolder}/surya",
                 "PYDEVD_DISABLE_FILE_VALIDATION": "1",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: gradio_run offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/gradio/gradio_run.py",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "args": [
-                "${workspaceFolder}/gradio/gradio_app.py"
-            ],
-            "env": {
-                "APP_PATH": "${workspaceFolder}/surya",
-                "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
         },
         {
-            "name": "debugpy: ocr_app mirror",
+            "name": "debugpy: surya_screenshot server",
             "type": "debugpy",
             "request": "launch",
-            "module": "streamlit",
+            "module": "surya.scripts.screenshot_app",
             "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/streamlit_app.py"
-            ],
+            "cwd": "${workspaceFolder}/surya",
             "env": {
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://developer.lan:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_app offline",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "streamlit",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/streamlit_app.py"
-            ],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
         },
         {
-            "name": "debugpy: ocr_text mirror",
+            "name": "debugpy: surya_gui server",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_text.py",
+            "code": "from surya.scripts.run_streamlit_app import streamlit_app_cli; streamlit_app_cli()",
             "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "cwd": "${workspaceFolder}/surya",
+            "subProcess": true,
             "env": {
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_text offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_text.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_text mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_text.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_text offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_text.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_layout mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_layout.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_layout offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_layout.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: table_recognition mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/table_recognition.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: table_recognition offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/table_recognition.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_latex mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_latex.py",
-            "console": "integratedTerminal",
-            "args": ["${workspaceFolder}/surya/static/images/latex_ocr.png"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_latex offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_latex.py",
-            "console": "integratedTerminal",
-            "args": ["${workspaceFolder}/surya/static/images/latex_ocr.png"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: texify_gui mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "streamlit",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/texify_app.py"
-            ],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: texify_gui offline",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "streamlit",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/texify_app.py"
-            ],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_ocr cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.ocr_text import ocr_text_cli; ocr_text_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/textbook.png",
+                "--images",
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_detect cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.detect_text import detect_text_cli; detect_text_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/form.png",
+                "--images",
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_layout cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.detect_layout import detect_layout_cli; detect_layout_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/excerpt.png",
+                "--images",
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_table cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.table_recognition import table_recognition_cli; table_recognition_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/corporate.png",
+                "--images",
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
         },
