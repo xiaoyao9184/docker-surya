@@ -2,26 +2,26 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "docker: compose up.label@gpu-offline",
+            "label": "docker: compose up.label@gpu",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/docker/up.label@gpu-offline/"
+                "cwd": "${workspaceFolder}/docker/up.label@gpu/"
             },
             "command": "docker compose -p surya up"
         },
         {
-            "label": "docker: compose up.gradio@gpu-offline",
+            "label": "docker: compose up.gradio@gpu",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/docker/up.gradio@gpu-offline/"
+                "cwd": "${workspaceFolder}/docker/up.gradio@gpu/"
             },
             "command": "docker compose -p surya up"
         },
         {
-            "label": "docker: compose up@cpu-online",
+            "label": "docker: compose up@cpu",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/docker/up@cpu-online/"
+                "cwd": "${workspaceFolder}/docker/up@cpu/"
             },
             "command": "docker compose -p surya up",
         },

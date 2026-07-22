@@ -7,17 +7,12 @@ services:
     working_dir: /workspace/gradio
     command: gradio gradio_app.py
     environment:
-      - TORCH_DEVICE=cuda
-      - HF_HUB_OFFLINE=true
+      - SURYA_INFERENCE_BACKEND=llamacpp
+      - TORCH_DEVICE=cpu
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
       - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/datalab/models/ocr_error_detection/2025_02_18
+      - DOCKER_HF_CACHE_PATH=/root/.cache/huggingface
     ports:
       - "7860:7860"
     volumes:
       - ./../../cache:/root/.cache
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [ gpu ]

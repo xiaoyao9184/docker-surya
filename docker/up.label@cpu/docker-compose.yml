@@ -19,9 +19,11 @@ services:
     command: label-studio-ml start --root-dir /workspace label
     environment:
       - LABEL_STUDIO_API_KEY=label-token
+      - SURYA_INFERENCE_BACKEND=llamacpp
       - TORCH_DEVICE=cpu
-      - HF_HUB_OFFLINE=true
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
+      - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/datalab/models/ocr_error_detection/2025_02_18
+      - DOCKER_HF_CACHE_PATH=/root/.cache/huggingface
     ports:
       - "9090:9090"
     volumes:

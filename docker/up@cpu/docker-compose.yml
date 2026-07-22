@@ -1,17 +1,16 @@
 
 
 services:
-  surya_gradio:
+  surya_app:
     image: xiaoyao9184/surya:0.20.0
-    container_name: surya_ocr_gradio
-    working_dir: /workspace/gradio
-    command: gradio gradio_app.py
+    container_name: surya_ocr_app
     environment:
       - TORCH_DEVICE=cpu
-      - HF_HUB_OFFLINE=true
+      - SURYA_INFERENCE_BACKEND=llamacpp
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
       - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/datalab/models/ocr_error_detection/2025_02_18
+      - DOCKER_HF_CACHE_PATH=/root/.cache/huggingface
     ports:
-      - "7860:7860"
+      - "8501:8501"
     volumes:
       - ./../../cache:/root/.cache
