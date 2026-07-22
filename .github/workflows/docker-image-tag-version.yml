@@ -10,16 +10,6 @@ on:
       - gradio/**
       - docker/build@pypi/dockerfile
       - .github/workflows/docker-image-tag-version.yml
-  workflow_dispatch:
-    inputs:
-      surya_version:
-        description: surya version of pypi
-        required: true
-        default: 0.20.0
-      streamlit_version:
-        description: streamlit version of pypi
-        required: true
-        default: 1.40.2
 
 jobs:
   build-and-push-docker-image:
@@ -30,10 +20,6 @@ jobs:
 
     strategy:
       matrix:
-        SURYA_VERSION:
-          - ${{ github.event.inputs.surya_version || '0.20.0' }}
-        STREAMLIT_VERSION:
-          - ${{ github.event.inputs.streamlit_version || '1.40.2' }}
         platform:
           - linux/amd64
 
@@ -47,7 +33,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
+
+      - name: Set env Surya git tag
+        run: |
+          git -C surya fetch --tags --force origin
+          SURYA_GIT_TAG="$(git -C surya tag --points-at HEAD | sort -V | tail -n 1)"
+          if [ -z "$SURYA_GIT_TAG" ]; then
+            echo "No git tag found for current Surya submodule commit." >&2
+            exit 1
+          fi
+          echo "SURYA_GIT_TAG=${SURYA_GIT_TAG#v}" >> "$GITHUB_ENV"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -76,7 +72,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/surya
             ghcr.io/${{ github.repository_owner }}/surya
           tags: |
-            type=raw,value=${{ matrix.SURYA_VERSION }}
+            type=raw,value=${{ env.SURYA_GIT_TAG }}
             type=raw,value=latest
           flavor: |
             latest=false
@@ -87,9 +83,6 @@ jobs:
         with:
           context: .
           file: ./docker/build@pypi/dockerfile
-          build-args: |
-            SURYA_VERSION=${{ matrix.SURYA_VERSION }}
-            STREAMLIT_VERSION=${{ matrix.STREAMLIT_VERSION }}
           platforms: ${{ matrix.platform }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
