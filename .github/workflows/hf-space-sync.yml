@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'feature/hf-space-sync'
     paths:
       - gradio/**
       - .github/workflows/hf-space-sync.yml

@@ -27,6 +27,17 @@ models:
   - xiaoyao9184/surya_layout
   - xiaoyao9184/surya_ocr_error_detection
   - xiaoyao9184/surya_inline_math_detection
+  - datalab-to/surya-ocr-2
+  - datalab-to/surya-ocr-2-gguf
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
+Several environment variables need to be set when using hf space.
+
+This will automatically download the pre-compiled llama.cpp as the backend for running the datalab-to/surya-ocr-2 model.
+
+- SURYA_INFERENCE_BACKEND=llamacpp Required
+- LLAMA_CPP_BINARY=llama-server Required
+- LLAMA_CPP_RELEASE_URL=[https://github.com/ggml-org/llama.cpp/releases/download/b10091/llama-b10091-bin-ubuntu-x64.tar.gz](https://github.com/ggml-org/llama.cpp/releases/download/b10091/llama-b10091-bin-ubuntu-x64.tar.gz) Optional
+- LLAMA_CPP_INSTALL_DIR=~/.cache/llama.cpp Optional
