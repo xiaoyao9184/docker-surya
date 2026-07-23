@@ -132,7 +132,8 @@
             "type": "shell",
             "command": [
                 "conda env create -f ./environment.yml",
-                "&& conda run --no-capture-output -n surya pip install --no-deps git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml"
+                "&& conda run --no-capture-output -n surya pip install --no-deps git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml",
+                "&& conda run --no-capture-output -n surya pip install -r requirements.override.txt",
             ]
         }
     ]

@@ -1,13 +1,3 @@
 torch==2.7.0
 surya-ocr==0.21.0
 gradio==5.8.0
-
-# lock version for import `transformers.onnx`
-transformers==4.56.1
-# transformers 4.56.1 depends on huggingface-hub>=0.34.0
-huggingface-hub>=0.34.0
-# gradio app need pdftext for run_ocr_errors
-pdftext==0.5.0
-
-# fix https://github.com/gradio-app/gradio/issues/10662
-pydantic==2.10.5

@@ -10,18 +10,13 @@ dependencies:
   - conda-forge::pytorch==2.7.0
   - conda-forge::pytorch-gpu==2.7.0
 
-  - streamlit==1.40.2
-
   - pip:
     - -e ./surya
-    # lock version for import `transformers.onnx`
-    - transformers==4.56.1
-    # streamlit app need pdftext for run_ocr_errors
-    - pdftext==0.5.0
+    # for streamlit
+    - streamlit==1.57.0
+    # for gradio
     - gradio==5.8.0
     # for label-studio development and test
     - -r label/requirements_base.txt
     - -r label/requirements_dev.txt
     - -r label/requirements_test.txt
-    # fix https://github.com/gradio-app/gradio/issues/10662
-    - pydantic==2.10.5

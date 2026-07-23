@@ -113,4 +113,6 @@ def _ensure_llama_server():
     _write_llama_server_wrapper(wrapper_path, llama_server.parent)
 
 
-_ensure_llama_server()
+def install_llama_server():
+    _ensure_llama_server()
+

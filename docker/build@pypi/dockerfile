@@ -1,5 +1,5 @@
 ARG SURYA_VERSION=0.21.0
-ARG STREAMLIT_VERSION=1.40.2
+ARG STREAMLIT_VERSION=1.57.0
 ARG GRADIO_VERSION=5.8.0
 
 
@@ -82,21 +82,32 @@ RUN printf '%s\n' \
 RUN pip3 install --upgrade pip
 
 RUN pip3 install --no-cache-dir \
-    surya-ocr==${SURYA_VERSION} \
-    transformers==4.56.1 \
-    pdftext==0.5.0 \
-    streamlit==${STREAMLIT_VERSION} \
-    gradio==${GRADIO_VERSION} \
-    pydantic==2.10.5 \
+    surya-ocr==${SURYA_VERSION}
+
+# Lock streamlit version
+RUN pip3 install --no-cache-dir \
+    streamlit==${STREAMLIT_VERSION}
+
+# Lock gradio version
+RUN pip3 install --no-cache-dir \
+    gradio==${GRADIO_VERSION}
+
+# Lock label-studio version
+RUN pip3 install --no-deps \
     gunicorn==22.0.0 \
     Flask==3.1.3 \
     colorama==0.4.6 \
     requests==2.34.2 \
     semver==3.0.4 \
     label-studio-sdk==1.0.10 \
-    boto3==1.35.91
-RUN pip3 install --no-deps \
+    boto3==1.35.91 \
     git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
+
+# Override incorrect version
+RUN pip3 install --no-cache-dir \
+    pdftext==0.6.3 \
+    pypdfium2==4.30.0 \
+    pydantic==2.10.5
 
 COPY ./gradio /workspace/gradio
 COPY ./label /workspace/label

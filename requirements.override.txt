@@ -1,0 +1,7 @@
+# lock for fix https://github.com/gradio-app/gradio/issues/10662
+pydantic==2.10.5
+# lock for fix https://github.com/datalab-to/surya/issues/536
+pypdfium2==4.30.0
+# need for run_ocr_errors feat
+# lock for depends pypdfium2 4.30.0
+pdftext==0.6.3
