@@ -37,7 +37,7 @@ services:
               capabilities: [ gpu ]
 
   surya_app:
-    image: xiaoyao9184/surya:0.20.0
+    image: xiaoyao9184/surya:0.21.0
     container_name: surya_ocr_app
     environment:
       - SURYA_INFERENCE_URL=http://surya_ocr_llm:8000/v1
