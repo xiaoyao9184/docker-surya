@@ -16,8 +16,11 @@
                 "LABEL_STUDIO_URL": "http://192.168.1.18:8080",
                 "LABEL_STUDIO_API_KEY": "label-token",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -34,8 +37,11 @@
             ],
             "env": {
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -54,8 +60,11 @@
                 "APP_PATH": "${workspaceFolder}/surya",
                 "PYDEVD_DISABLE_FILE_VALIDATION": "1",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -70,8 +79,11 @@
             "env": {
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -87,8 +99,11 @@
             "env": {
                 "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -106,8 +121,11 @@
             ],
             "env": {
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -125,8 +143,11 @@
             ],
             "env": {
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -144,8 +165,11 @@
             ],
             "env": {
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false
@@ -163,8 +187,11 @@
             ],
             "env": {
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
             },
             "justMyCode": false

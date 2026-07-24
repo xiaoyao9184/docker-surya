@@ -36,6 +36,8 @@ services:
       - "datalab-to/surya-ocr-2"
       - "--speculative-config"
       - '{"method": "mtp", "num_speculative_tokens": 2}'
+    environment:
+      - HF_HUB_OFFLINE=true
     ports:
       - 8000
     volumes:
@@ -56,8 +58,11 @@ services:
       - LABEL_STUDIO_API_KEY=label-token
       - SURYA_INFERENCE_URL=http://surya_ocr_llm:8000/v1
       - TORCH_DEVICE=cuda
+      - HF_HUB_OFFLINE=true
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
       - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/datalab/models/ocr_error_detection/2025_02_18
+      - FAST_LAYOUT_MODEL_CHECKPOINT=/root/.cache/datalab/models/surya_layout2/0aee81d
+      - FAST_ORDER_MODEL_CHECKPOINT=/root/.cache/datalab/models/surya_layout2/0aee81d/order
       - DOCKER_HF_CACHE_PATH=/root/.cache/huggingface
     ports:
       - "9090:9090"
