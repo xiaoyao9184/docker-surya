@@ -1,3 +1,4 @@
+ARG GITHUB_PROXY=
 ARG SURYA_VERSION=0.21.0
 ARG STREAMLIT_VERSION=1.57.0
 ARG GRADIO_VERSION=5.8.0
@@ -5,6 +6,7 @@ ARG GRADIO_VERSION=5.8.0
 
 FROM nvidia/cuda:12.6.3-devel-ubuntu22.04 AS llama_cpp_builder
 
+ARG GITHUB_PROXY
 ARG LLAMA_CPP_REV=master
 ARG RUST_VERSION=1.87.0
 
@@ -24,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -L https://sh.rustup.rs \
     | sh -s -- -y --profile minimal --default-toolchain ${RUST_VERSION}
 
-RUN git clone https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp \
+RUN git clone ${GITHUB_PROXY}https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp \
     && cd /tmp/llama.cpp \
     && git checkout ${LLAMA_CPP_REV} \
     && cmake -B build-cpu -G Ninja \
@@ -44,6 +46,7 @@ RUN git clone https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp \
 
 FROM pytorch/pytorch:2.7.0-cuda12.6-cudnn9-runtime
 
+ARG GITHUB_PROXY
 ARG SURYA_VERSION
 ARG STREAMLIT_VERSION
 ARG GRADIO_VERSION
@@ -101,7 +104,7 @@ RUN pip3 install --no-deps \
     semver==3.0.4 \
     label-studio-sdk==1.0.10 \
     boto3==1.35.91 \
-    git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
+    git+${GITHUB_PROXY}https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
 
 # Override incorrect version
 RUN pip3 install --no-cache-dir \

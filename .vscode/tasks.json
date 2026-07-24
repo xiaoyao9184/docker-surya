@@ -28,12 +28,12 @@
         {
             "label": "docker: build master",
             "type": "shell",
-            "command": "docker build -t xiaoyao9184/surya:master -f ./docker/build@source/dockerfile .",
+            "command": "docker build --build-arg GITHUB_PROXY=${input:githubProxy} -t xiaoyao9184/surya:master -f ./docker/build@source/dockerfile .",
         },
         {
             "label": "docker: build 0.21.0",
             "type": "shell",
-            "command": "docker build -t xiaoyao9184/surya:0.21.0 -f ./docker/build@pypi/dockerfile .",
+            "command": "docker build --build-arg GITHUB_PROXY=${input:githubProxy} -t xiaoyao9184/surya:0.21.0 -f ./docker/build@pypi/dockerfile .",
         },
         {
             "label": "hf: download models",
@@ -134,9 +134,17 @@
             "type": "shell",
             "command": [
                 "conda env create -f ./environment.yml",
-                "&& conda run --no-capture-output -n surya pip install --no-deps git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml",
+                "&& conda run --no-capture-output -n surya pip install --no-deps git+${input:githubProxy}https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml",
                 "&& conda run --no-capture-output -n surya pip install -r requirements.override.txt",
             ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "githubProxy",
+            "type": "promptString",
+            "description": "GitHub proxy prefix for docker build",
+            "default": ""
         }
     ]
 }
