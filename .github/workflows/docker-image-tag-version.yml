@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'support/**'
     paths:
       - label/**
       - gradio/**
