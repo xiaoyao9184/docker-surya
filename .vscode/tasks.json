@@ -131,9 +131,9 @@
             "label": "conda: create env",
             "type": "shell",
             "command": [
-                "git config --global url.'https://github.com/xiaoyao9184/label-studio-sdk'.insteadOf 'https://github.com/HumanSignal/label-studio-sdk'",
-                "&& conda env create -f ./environment.yml",
-                "&& git config --global --unset url.'https://github.com/xiaoyao9184/label-studio-sdk'.insteadOf"
+                "conda env create -f ./environment.yml",
+                "&& conda run --no-capture-output -n surya pip install --no-deps git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml",
+                "&& conda run --no-capture-output -n surya pip install -r requirements.override.txt",
             ]
         }
     ]

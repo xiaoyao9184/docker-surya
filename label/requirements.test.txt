@@ -1,0 +1,5 @@
+# The following are the dependency copy from https://github.com/HumanSignal/label-studio-ml-backend/blob/b06ebeb81531566ea10498f3ebe4013e43d5ee1d/tests/requirements-test.txt
+pytest==6.2.5
+pytest-cov==3.0.0
+
+responses==0.13.0

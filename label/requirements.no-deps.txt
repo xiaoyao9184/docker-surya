@@ -1,0 +1,1 @@
+label-studio-ml @ git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb

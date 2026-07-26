@@ -19,7 +19,7 @@ on:
       streamlit_version:
         description: streamlit version of pypi
         required: true
-        default: 1.40.2
+        default: 1.57.0
 
 jobs:
   build-and-push-docker-image:
@@ -33,7 +33,7 @@ jobs:
         SURYA_VERSION:
           - ${{ github.event.inputs.surya_version || '0.20.0' }}
         STREAMLIT_VERSION:
-          - ${{ github.event.inputs.streamlit_version || '1.40.2' }}
+          - ${{ github.event.inputs.streamlit_version || '1.57.0' }}
         platform:
           - linux/amd64
 
