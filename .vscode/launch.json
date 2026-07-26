@@ -96,37 +96,17 @@
             },
             "justMyCode": false
         },
+
         {
-            "name": "debugpy: ocr_app mirror",
+            "name": "debugpy: surya_screenshot server",
             "type": "debugpy",
             "request": "launch",
-            "module": "streamlit",
+            "module": "surya.scripts.screenshot_app",
             "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/streamlit_app.py"
-            ],
+            "cwd": "${workspaceFolder}/surya",
             "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://developer.lan:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_app offline",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "streamlit",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/streamlit_app.py"
-            ],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
@@ -139,204 +119,106 @@
             "justMyCode": false
         },
         {
-            "name": "debugpy: ocr_text mirror",
+            "name": "debugpy: surya_gui server",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_text.py",
+            "code": "from surya.scripts.run_streamlit_app import streamlit_app_cli; streamlit_app_cli()",
             "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
+            "cwd": "${workspaceFolder}/surya",
+            "subProcess": true,
             "env": {
                 "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_text offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_text.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "HF_HUB_OFFLINE": "true",
-                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
-                // NOT work Still downloading the main version from HF, so switch use model path
-                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
-                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
-                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
-                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_text mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_text.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_text offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_text.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_layout mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_layout.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: detect_layout offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/detect_layout.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
-                // NOT work Still downloading the main version from HF, so switch use model path
-                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
-                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
-                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
-                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: table_recognition mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/table_recognition.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: table_recognition offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/table_recognition.py",
-            "console": "integratedTerminal",
-            "args": ["--images", "${workspaceFolder}/surya/static/images/chi_hind_text.jpg"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
-                // NOT work Still downloading the main version from HF, so switch use model path
-                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
-                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
-                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
-                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_latex mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_latex.py",
-            "console": "integratedTerminal",
-            "args": ["${workspaceFolder}/surya/static/images/latex_ocr.png"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: ocr_latex offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/surya/ocr_latex.py",
-            "console": "integratedTerminal",
-            "args": ["${workspaceFolder}/surya/static/images/latex_ocr.png"],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
-                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
-                // NOT work Still downloading the main version from HF, so switch use model path
-                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
-                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
-                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
-                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: texify_gui mirror",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "streamlit",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/texify_app.py"
-            ],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_ENDPOINT": "http://localhost:8090"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: texify_gui offline",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "streamlit",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "${workspaceFolder}/surya/surya/scripts/texify_app.py"
-            ],
-            "env": {
-                "STREAMLIT_SERVER_PORT": "8501",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+                // NOT work Still downloading the main version from HF, so switch use model path
+                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
+                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
+                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
+                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_ocr cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.ocr_text import ocr_text_cli; ocr_text_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/textbook.png",
+                "--images",
+            ],
+            "env": {
+                "HF_HUB_OFFLINE": "true",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+                // NOT work Still downloading the main version from HF, so switch use model path
+                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
+                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
+                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
+                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_detect cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.detect_text import detect_text_cli; detect_text_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/form.png",
+                "--images",
+            ],
+            "env": {
+                "HF_HUB_OFFLINE": "true",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_layout cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.detect_layout import detect_layout_cli; detect_layout_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/excerpt.png",
+                "--images",
+            ],
+            "env": {
+                "HF_HUB_OFFLINE": "true",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
+                // NOT work Still downloading the main version from HF, so switch use model path
+                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
+                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
+                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
+                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya_table cli",
+            "type": "debugpy",
+            "request": "launch",
+            "code": "from surya.scripts.table_recognition import table_recognition_cli; table_recognition_cli()",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "${workspaceFolder}/surya/static/images/corporate.png",
+                "--images",
+            ],
+            "env": {
+                "HF_HUB_OFFLINE": "true",
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 // NOT work Still downloading the main version from HF, so switch use model path
                 // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
