@@ -126,6 +126,7 @@
                 "conda run --no-capture-output -n surya poetry run surya_gui"
             ]
         },
+
         {
             "label": "conda: create env",
             "type": "shell",
