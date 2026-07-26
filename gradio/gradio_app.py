@@ -15,6 +15,7 @@ import html as html_lib
 import re
 import tempfile
 import time
+from functools import lru_cache
 from typing import List
 
 import pypdfium2
@@ -105,6 +106,9 @@ def _assemble_page_html(page: PageOCRResult) -> str:
         )
     return "\n".join(parts)
 
+def _layout_predictor(use_fast: bool):
+    return load_fast_layout() if use_fast else predictors["layout"]
+
 # just copy from streamlit_app.py
 def text_detection(img) -> tuple[Image.Image, TextDetectionResult, float]:
     t = time.perf_counter()
@@ -115,9 +119,11 @@ def text_detection(img) -> tuple[Image.Image, TextDetectionResult, float]:
     return det_img, text_pred, elapsed
 
 # just copy from streamlit_app.py
-def layout_detection(img) -> tuple[Image.Image, LayoutResult, float]:
+def layout_detection(
+    img, use_fast: bool = False
+) -> tuple[Image.Image, LayoutResult, float]:
     t = time.perf_counter()
-    pred = predictors["layout"]([img])[0]
+    pred = _layout_predictor(use_fast)([img])[0]
     elapsed = time.perf_counter() - t
     polygons = [p.polygon for p in pred.bboxes]
     labels = [
@@ -171,29 +177,26 @@ def table_recognition(
     img: Image.Image,
     mode: str,
     skip_table_detection: bool,
+    use_fast_layout: bool = False,
 ) -> tuple[Image.Image, List[TableResult], float, float]:
     """Returns (annotated_img, table_preds, layout_elapsed, table_rec_elapsed)."""
     layout_elapsed = 0.0
     if skip_table_detection:
         table_imgs = [img]
-        table_counts = [0]
         table_bboxes = [(0, 0, img.size[0], img.size[1])]
     else:
         t = time.perf_counter()
-        layout = predictors["layout"]([img])[0]
+        layout = _layout_predictor(use_fast_layout)([img])[0]
         layout_elapsed = time.perf_counter() - t
         tables = [b for b in layout.bboxes if b.label in ("Table", "TableOfContents")]
         if not tables:
             return img.copy(), [], layout_elapsed, 0.0
         table_bboxes = [tuple(int(c) for c in b.bbox) for b in tables]
         table_imgs = [img.crop(b) for b in table_bboxes]
-        table_counts = [b.count for b in tables]
 
     t = time.perf_counter()
     if mode == "full":
-        table_preds = predictors["table_rec"].predict_full(
-            table_imgs, counts=table_counts
-        )
+        table_preds = predictors["table_rec"].predict_full(table_imgs)
     else:
         table_preds = predictors["table_rec"].predict_simple(table_imgs)
     table_rec_elapsed = time.perf_counter() - t
@@ -356,6 +359,7 @@ def _block_details_html(page: PageOCRResult, img: Image.Image | None = None) -> 
     return "\n".join(parts)
 
 
+@lru_cache(maxsize=1)
 def load_predictors():
     manager = SuryaInferenceManager()
     layout_predictor = LayoutPredictor(manager)
@@ -375,6 +379,13 @@ def load_predictors():
         "detection": DetectionPredictor(),
         "ocr_error": OCRErrorPredictor(),
     }
+
+
+@lru_cache(maxsize=1)
+def load_fast_layout():
+    from surya.fast_layout import FastLayoutPredictor
+
+    return FastLayoutPredictor()
 
 
 # Load models if not already loaded in reload mode
@@ -402,6 +413,8 @@ with gr.Blocks(title="Surya") as demo:
             in_file = gr.File(label="PDF file or image:", file_types=[".pdf", ".png", ".jpg", ".jpeg", ".gif", ".webp"])
             in_num = gr.Slider(label="Page number", minimum=1, maximum=100, value=1, step=1)
             text_det_btn = gr.Button("Run Text Detection")
+
+            use_fast_layout_ckb = gr.Checkbox(label="Fast layout", value=True, info="Use the fast layout detector.")
             layout_det_btn = gr.Button("Run Layout Analysis")
 
             block_ocr_btn = gr.Button("Run Block OCR")
@@ -482,17 +495,17 @@ with gr.Blocks(title="Surya") as demo:
         )
 
         # Run layout
-        def layout_det_img(in_file, page_number):
+        def layout_det_img(in_file, page_number, use_fast_layout):
             pil_image_highres = get_image(in_file, page_number)
-            layout_img, pred, elapsed = layout_detection(pil_image_highres)
+            layout_img, pred, elapsed = layout_detection(pil_image_highres, use_fast_layout)
             layout_json = pred.model_dump(exclude=["segmentation_map"])
             return (
-                gr.update(label="Result image: layout detected", value=layout_img),
+                gr.update(label=f"Result image: layout{'(fast)' if use_fast_layout else ''} detected", value=layout_img),
                 gr.update(label=f"Result json: {elapsed * 1000:.0f} ms ({elapsed:.2f}s) {len(pred.bboxes)} polys layout labels detected", value=layout_json)
             )
         layout_det_btn.click(
             fn=layout_det_img,
-            inputs=[in_file, in_num],
+            inputs=[in_file, in_num, use_fast_layout_ckb],
             outputs=[result_img, result_json]
         )
 
@@ -548,9 +561,9 @@ with gr.Blocks(title="Surya") as demo:
         )
 
         # Run Table Recognition
-        def table_rec_img(in_file, page_number, table_mode, skip_table_detection):
+        def table_rec_img(in_file, page_number, table_mode, skip_table_detection, use_fast_layout):
             pil_image_highres = get_image(in_file, page_number)
-            table_img, pred, t_layout, t_table = table_recognition(pil_image_highres, table_mode, skip_table_detection)
+            table_img, pred, t_layout, t_table = table_recognition(pil_image_highres, table_mode, skip_table_detection, use_fast_layout)
             table_json = [p.model_dump() for p in pred]
             timing_parts = []
             if not skip_table_detection:
@@ -584,7 +597,7 @@ with gr.Blocks(title="Surya") as demo:
             )
         table_rec_btn.click(
             fn=table_rec_img,
-            inputs=[in_file, in_num, table_mode_rad, skip_table_detection_ckb],
+            inputs=[in_file, in_num, table_mode_rad, skip_table_detection_ckb, use_fast_layout_ckb],
             outputs=[result_img, result_json, result_html_source, result_html_rendered, result_block_details]
         )
 
