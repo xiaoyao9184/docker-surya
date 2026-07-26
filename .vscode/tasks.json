@@ -2,26 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "docker: compose up.label@gpu-offline",
+            "label": "docker: compose up vllm",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/docker/up.label@gpu-offline/"
+                "cwd": "${workspaceFolder}/docker/${input:docker-up-path}/",
+                "env": {
+                    "SURYA_INFERENCE_BACKEND": "vllm",
+                    "COMPOSE_PROFILES": "vllm",
+                }
             },
-            "command": "docker compose -p surya up"
+            "command": "docker compose -p surya up",
         },
         {
-            "label": "docker: compose up.gradio@gpu-offline",
+            "label": "docker: compose up llama",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/docker/up.gradio@gpu-offline/"
-            },
-            "command": "docker compose -p surya up"
-        },
-        {
-            "label": "docker: compose up@cpu-online",
-            "type": "shell",
-            "options": {
-                "cwd": "${workspaceFolder}/docker/up@cpu-online/"
+                "cwd": "${workspaceFolder}/docker/${input:docker-up-path}/",
+                "env": {
+                    "SURYA_INFERENCE_BACKEND": "llamacpp",
+                }
             },
             "command": "docker compose -p surya up",
         },
@@ -130,6 +129,20 @@
             "type": "promptString",
             "description": "GitHub proxy url prefix for pip install",
             "default": ""
-        }
+        },
+        {
+            "id": "docker-up-path",
+            "type": "pickString",
+            "description": "Select startup path of docker compose",
+            "default": "",
+            "options": [
+                "up@cpu",
+                "up@gpu",
+                "up.gradio@cpu",
+                "up.gradio@gpu",
+                "up.label@cpu",
+                "up.label@gpu",
+            ]
+        },
     ]
 }

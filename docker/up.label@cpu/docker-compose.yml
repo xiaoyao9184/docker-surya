@@ -1,0 +1,72 @@
+
+
+services:
+  labelstudio:
+    image: heartexlabs/label-studio
+    container_name: label-studio
+    environment:
+      - LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=true
+      - LABEL_STUDIO_USERNAME=label@localhost
+      - LABEL_STUDIO_PASSWORD=label.123
+      - LABEL_STUDIO_USER_TOKEN=label-token
+    ports:
+      - "8080:8080"
+
+  surya_llm:
+    profiles:
+      - vllm
+    # Qwen 3.5 on cpu support by 0.21.0 https://github.com/vllm-project/vllm/pull/41025
+    # BUT Still running slowly
+    image: vllm/vllm-openai-cpu:v0.21.0-x86_64
+    container_name: surya_ocr_llm
+    shm_size: 4g
+    cap_add:
+      - SYS_NICE
+    security_opt:
+      - seccomp=unconfined
+    command:
+      - "--model"
+      - "datalab-to/surya-ocr-2"
+      - "--revision"
+      - "ac7f775"
+      - "--no-enforce-eager"
+      - "--max-num-seqs"
+      - "${VLLM_MAX_NUM_SEQS:-1}"
+      - "--dtype"
+      - "bfloat16"
+      - "--max-model-len"
+      - "${VLLM_MAX_MODEL_LEN:-8192}"
+      - "--max-num-batched-tokens"
+      - "${VLLM_MAX_NUM_BATCHED_TOKENS:-4096}"
+      - "--mm-processor-kwargs"
+      - '{"min_pixels": 3136, "max_pixels": ${VLLM_MAX_PIXELS:-1254400}}'
+      - "--served-model-name"
+      - "datalab-to/surya-ocr-2"
+    environment:
+      - HF_HUB_OFFLINE=true
+      - VLLM_CPU_KVCACHE_SPACE=${VLLM_CPU_KVCACHE_SPACE:-4}
+      - VLLM_CPU_OMP_THREADS_BIND=${VLLM_CPU_OMP_THREADS_BIND:-auto}
+      - VLLM_CPU_NUM_OF_RESERVED_CPU=${VLLM_CPU_NUM_OF_RESERVED_CPU:-1}
+    ports:
+      - 8000
+    volumes:
+      - ./../../cache:/root/.cache
+
+  surya_label:
+    image: xiaoyao9184/surya:0.20.0
+    container_name: surya-ocr-label
+    working_dir: /workspace/label
+    command: label-studio-ml start --root-dir /workspace label
+    environment:
+      - LABEL_STUDIO_API_KEY=label-token
+      - TORCH_DEVICE=cpu
+      - HF_HUB_OFFLINE=true
+      - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
+      - SURYA_GGUF_LOCAL_MODEL_PATH=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf
+      - SURYA_GGUF_LOCAL_MMPROJ_PATH=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf
+      - SURYA_INFERENCE_BACKEND=${SURYA_INFERENCE_BACKEND:-}
+      - SURYA_INFERENCE_URL=${SURYA_INFERENCE_URL:-}
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./../../cache:/root/.cache
