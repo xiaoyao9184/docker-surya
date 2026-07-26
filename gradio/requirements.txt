@@ -1,5 +1,5 @@
 torch==2.12.0
-surya-ocr==0.20.0
+surya-ocr==0.21.0
 gradio==5.8.0
 
 # for run_ocr_errors feat

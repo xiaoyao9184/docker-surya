@@ -52,7 +52,7 @@ class SuryaOCR(LabelStudioMLBase):
     def setup(self):
         """Configure any paramaters of your model here
         """
-        self.set("model_version", f'{self.__class__.__name__}-v0.20.0')
+        self.set("model_version", f'{self.__class__.__name__}-v0.21.0')
 
         if self.LABEL_MAPPINGS_FILE and os.path.exists(self.LABEL_MAPPINGS_FILE):
             with open(self.LABEL_MAPPINGS_FILE, 'r') as f:
