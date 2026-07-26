@@ -3,4 +3,5 @@ surya-ocr==0.21.0
 gradio==5.8.0
 
 # for run_ocr_errors feat
-pdftext==0.6.3
+# override old version for conflict
+# pdftext==0.7.0

@@ -97,7 +97,9 @@ RUN /opt/venv/bin/python -m pip install --no-cache-dir --no-deps \
 
 # Override incorrect version
 RUN /opt/venv/bin/python -m pip install --no-cache-dir \
-    pydantic==2.10.5
+    pydantic==2.10.5 \
+    pypdfium2==4.30.0 \
+    pdftext==0.6.3
 
 COPY ./gradio /workspace/gradio
 COPY ./label /workspace/label

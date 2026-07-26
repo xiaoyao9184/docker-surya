@@ -1,5 +1,3 @@
-# lock for fix https://github.com/gradio-app/gradio/issues/10662
-pydantic==2.10.5
 # lock for fix https://github.com/datalab-to/surya/issues/536
 pypdfium2==4.30.0
 # lock for conflict with pypdfium2 4.30.0
