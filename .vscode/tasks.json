@@ -35,6 +35,7 @@
             "type": "shell",
             "command": "docker build --build-arg github-proxy-url=${input:github-proxy-url} -t xiaoyao9184/surya:0.20.0 -f ./docker/build@pypi/dockerfile .",
         },
+
         {
             "label": "hf: download models",
             "type": "shell",
@@ -47,10 +48,9 @@
                 }
             },
             "command": [
-                "hf download xiaoyao9184/surya_text_detection --repo-type model --revision 2025_05_07 --local-dir ./cache/datalab/models/text_detection/2025_05_07",
-                "&& hf download xiaoyao9184/surya_text_recognition --repo-type model --revision 2025_09_23 --local-dir ./cache/datalab/models/text_recognition/2025_09_23",
-                "&& hf download xiaoyao9184/surya_table_recognition --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/table_recognition/2025_02_18",
-                "&& hf download xiaoyao9184/surya_layout --repo-type model --revision 2025_09_23 --local-dir ./cache/datalab/models/layout/2025_09_23",
+                "hf download datalab-to/surya-ocr-2 --repo-type model --revision ac7f775 --cache-dir ./cache/huggingface/hub",
+                "&& hf download datalab-to/surya-ocr-2-gguf --repo-type model --revision 6a3a4c3 --cache-dir ./cache/huggingface/hub",
+                "&& hf download xiaoyao9184/surya_text_detection --repo-type model --revision 2025_05_07 --local-dir ./cache/datalab/models/text_detection/2025_05_07",
                 "&& hf download xiaoyao9184/surya_ocr_error_detection --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/ocr_error_detection/2025_02_18",
             ]
         },
@@ -65,7 +65,8 @@
                     // "HF_ENDPOINT": "https://hf-mirror.com",
                     // "HF_HUB_ETAG_TIMEOUT": "1000",
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
-                    "XDG_CACHE_HOME": "${workspaceFolder}/cache"
+                    "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 }
             },
             "command": [
@@ -84,7 +85,8 @@
                     // "HF_ENDPOINT": "https://hf-mirror.com",
                     // "HF_HUB_ETAG_TIMEOUT": "1000",
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
-                    "XDG_CACHE_HOME": "${workspaceFolder}/cache"
+                    "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 }
             },
             "command": [
@@ -101,7 +103,8 @@
                     // "HF_ENDPOINT": "https://hf-mirror.com",
                     // "HF_HUB_ETAG_TIMEOUT": "1000",
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
-                    "XDG_CACHE_HOME": "${workspaceFolder}/cache"
+                    "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 }
             },
             "command": [
@@ -120,6 +123,7 @@
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
                     "STREAMLIT_SERVER_PORT": "8501",
                     "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 },
             },
             "command": [

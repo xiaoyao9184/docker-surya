@@ -22,7 +22,12 @@ services:
       - TORCH_DEVICE=cuda
       - HF_HUB_OFFLINE=true
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
-      - LAYOUT_MODEL_CHECKPOINT=/root/.cache/datalab/models/layout/2025_09_23
+      - DOCKER_HF_CACHE_PATH=/root/.cache/huggingface
+      # NOT work Still downloading the main version from HF, so switch use model path
+      # - VLLM_EXTRA_ARGS=--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775
+      - SURYA_MODEL_CHECKPOINT=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad        
+      - SURYA_GGUF_LOCAL_MODEL_PATH=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf
+      - SURYA_GGUF_LOCAL_MMPROJ_PATH=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf
     ports:
       - "9090:9090"
     volumes:
