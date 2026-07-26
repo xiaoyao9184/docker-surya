@@ -1,5 +1,5 @@
 torch==2.7.0
-surya-ocr==0.17.1
+surya-ocr==0.20.0
 gradio==5.8.0
 
 # lock version for import `transformers.onnx`
