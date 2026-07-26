@@ -4,6 +4,3 @@ gradio==5.8.0
 
 # for run_ocr_errors feat
 pdftext==0.6.3
-
-# lock for fix https://github.com/gradio-app/gradio/issues/10662
-pydantic==2.10.5
