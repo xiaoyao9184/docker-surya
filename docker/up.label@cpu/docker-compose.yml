@@ -28,7 +28,7 @@ services:
       - "--model"
       - "datalab-to/surya-ocr-2"
       - "--revision"
-      - "ac7f775"
+      - "3b3d4cd"
       - "--no-enforce-eager"
       - "--max-num-seqs"
       - "${VLLM_MAX_NUM_SEQS:-1}"

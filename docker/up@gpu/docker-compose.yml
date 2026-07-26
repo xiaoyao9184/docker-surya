@@ -10,7 +10,7 @@ services:
       - "--model"
       - "datalab-to/surya-ocr-2"
       - "--revision"
-      - "ac7f775"
+      - "3b3d4cd"
       - "--no-enforce-eager"
       - "--max-num-seqs"
       - "24"
@@ -50,6 +50,8 @@ services:
       - HF_HUB_OFFLINE=true
       - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
       - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/datalab/models/ocr_error_detection/2025_02_18
+      - FAST_LAYOUT_MODEL_CHECKPOINT=/root/.cache/datalab/models/surya_layout2/0aee81d
+      - FAST_ORDER_MODEL_CHECKPOINT=/root/.cache/datalab/models/surya_layout2/0aee81d/order
       - SURYA_GGUF_LOCAL_MODEL_PATH=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf
       - SURYA_GGUF_LOCAL_MMPROJ_PATH=/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf
       - SURYA_INFERENCE_BACKEND=${SURYA_INFERENCE_BACKEND:-}
