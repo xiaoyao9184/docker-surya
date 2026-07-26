@@ -1,3 +1,5 @@
+ARG GITHUB_PROXY=
+
 
 FROM alpine/curl:latest AS fonts
 
@@ -8,6 +10,8 @@ RUN curl -L -o /fonts/GoNotoCurrent-Regular.ttf https://github.com/satbyy/go-not
 
 
 FROM pytorch/pytorch:2.12.0-cuda12.6-cudnn9-runtime
+
+ARG GITHUB_PROXY
 
 WORKDIR /app
 
@@ -51,7 +55,7 @@ RUN pip3 install --no-cache-dir \
 
 # No-deps label-studio version
 RUN pip3 install --no-cache-dir --no-deps \
-    git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
+    git+${GITHUB_PROXY}https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
 
 # Override incorrect version
 RUN pip3 install --no-cache-dir \

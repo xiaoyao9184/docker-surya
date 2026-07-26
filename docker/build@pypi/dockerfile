@@ -1,3 +1,4 @@
+ARG GITHUB_PROXY=
 ARG SURYA_VERSION=0.20.0
 ARG STREAMLIT_VERSION=1.57.0
 ARG GRADIO_VERSION=5.8.0
@@ -13,6 +14,7 @@ RUN curl -L -o /fonts/GoNotoCurrent-Regular.ttf https://github.com/satbyy/go-not
 
 FROM pytorch/pytorch:2.12.0-cuda12.6-cudnn9-runtime
 
+ARG GITHUB_PROXY
 ARG SURYA_VERSION
 ARG STREAMLIT_VERSION
 ARG GRADIO_VERSION
@@ -55,7 +57,7 @@ RUN pip3 install --no-cache-dir \
 
 # No-deps label-studio version
 RUN pip3 install --no-cache-dir --no-deps \
-    git+https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
+    git+${GITHUB_PROXY}https://github.com/HumanSignal/label-studio-ml-backend.git@b06ebeb#egg=label-studio-ml
 
 # Override incorrect version
 RUN pip3 install --no-cache-dir \
