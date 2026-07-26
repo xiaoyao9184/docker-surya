@@ -1,1 +1,20 @@
-{}
+{
+    "Caption": "Caption",
+    "Footnote": "Footnote",
+    "Equation": "Equation",
+    "ListGroup": "ListGroup",
+    "PageHeader": "PageHeader",
+    "PageFooter": "PageFooter",
+    "Picture": "Picture",
+    "SectionHeader": "SectionHeader",
+    "Table": "Table",
+    "Text": "Text",
+    "Figure": "Figure",
+    "Code": "Code",
+    "Form": "Form",
+    "TableOfContents": "TableOfContents",
+    "ChemicalBlock": "ChemicalBlock",
+    "Diagram": "Diagram",
+    "Bibliography": "Bibliography",
+    "BlankPage": "BlankPage"
+}

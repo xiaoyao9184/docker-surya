@@ -71,11 +71,11 @@ if __name__ == "__main__":
     parser.add_argument('--basic-auth-user',
                         default=os.environ.get('ML_SERVER_BASIC_AUTH_USER', None),
                         help='Basic auth user')
-    
+
     parser.add_argument('--basic-auth-pass',
                         default=os.environ.get('ML_SERVER_BASIC_AUTH_PASS', None),
-                        help='Basic auth pass')    
-    
+                        help='Basic auth pass')
+
     args = parser.parse_args()
 
     # setup logging level

@@ -54,34 +54,15 @@
                 "&& hf download xiaoyao9184/surya_ocr_error_detection --repo-type model --revision 2025_02_18 --local-dir ./cache/datalab/models/ocr_error_detection/2025_02_18",
             ]
         },
+
         {
-            "label": "conda: pytest label-studio-ml",
+            "label": "conda: start label-studio-ml",
             "type": "shell",
             "options": {
                 "cwd": "${workspaceFolder}/",
                 "env": {
-                    // "LABEL_STUDIO_URL": "http://localhost:8080",
-                    // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
-                    // "HF_ENDPOINT": "https://hf-mirror.com",
-                    // "HF_HUB_ETAG_TIMEOUT": "1000",
-                    // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",
-                    "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                    "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
-                }
-            },
-            "command": [
-                "conda run -n surya pytest ${workspaceFolder}/label/test_api.py"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "conda: label-studio-ml start",
-            "type": "shell",
-            "options": {
-                "cwd": "${workspaceFolder}/",
-                "env": {
-                    // "LABEL_STUDIO_URL": "http://localhost:8080",
-                    // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
+                    "LABEL_STUDIO_URL": "http://localhost:8080",
+                    "LABEL_STUDIO_API_KEY": "label-token",
                     // "HF_ENDPOINT": "https://hf-mirror.com",
                     // "HF_HUB_ETAG_TIMEOUT": "1000",
                     // "HF_HUB_DOWNLOAD_TIMEOUT": "1000",

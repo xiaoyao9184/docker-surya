@@ -18,7 +18,7 @@ image: "/tutorials/surya.png"
 
 # Surya model connection
 
-The [Surya](https://github.com/VikParuchuri/surya) model connection is a powerful tool that integrates the capabilities of Surya with Label Studio. It is designed to assist in machine learning labeling tasks, specifically those involving Optical Character Recognition (OCR). 
+The [Surya](https://github.com/VikParuchuri/surya) model connection is a powerful tool that integrates the capabilities of Surya with Label Studio. It is designed to assist in machine learning labeling tasks, specifically those involving Optical Character Recognition (OCR).
 
 The primary function of this connection is to recognize and extract text from images, which can be a crucial step in many machine learning workflows. By automating this process, the Surya model connection can significantly increase efficiency, reducing the time and effort required for manual text extraction.
 
@@ -26,9 +26,9 @@ In the context of Label Studio, this connection enhances the platform's labeling
 
 ## Before you begin
 
-Before you begin, you must install the [Label Studio ML backend](https://github.com/HumanSignal/label-studio-ml-backend?tab=readme-ov-file#quickstart). 
+Before you begin, you must install the [Label Studio ML backend](https://github.com/HumanSignal/label-studio-ml-backend?tab=readme-ov-file#quickstart).
 
-This tutorial uses the [`surya` example](https://github.com/xiaoyao9184/docker-surya/tree/master/label). 
+This tutorial uses the [`surya` example](https://github.com/xiaoyao9184/docker-surya/tree/master/label).
 
 ## Labeling configuration
 
@@ -41,8 +41,24 @@ When setting the labeling configuration, select the **Computer Vision > Optical 
   <Image name="image" value="$image"/>
 
   <Labels name="label" toName="image">
-    <Label value="Text" background="green"/>
-    <Label value="Handwriting" background="blue"/>
+    <Label value="Caption" background="#4E79A7"/>
+    <Label value="Footnote" background="#F28E2B"/>
+    <Label value="Equation" background="#E15759"/>
+    <Label value="ListGroup" background="#76B7B2"/>
+    <Label value="PageHeader" background="#59A14F"/>
+    <Label value="PageFooter" background="#EDC948"/>
+    <Label value="Picture" background="#B07AA1"/>
+    <Label value="SectionHeader" background="#FF9DA7"/>
+    <Label value="Table" background="#9C755F"/>
+    <Label value="Text" background="#BAB0AC"/>
+    <Label value="Figure" background="#1F77B4"/>
+    <Label value="Code" background="#FF7F0E"/>
+    <Label value="Form" background="#2CA02C"/>
+    <Label value="TableOfContents" background="#D62728"/>
+    <Label value="ChemicalBlock" background="#9467BD"/>
+    <Label value="Diagram" background="#8C564B"/>
+    <Label value="Bibliography" background="#E377C2"/>
+    <Label value="BlankPage" background="#7F7F7F"/>
   </Labels>
 
   <Rectangle name="bbox" toName="image" strokeWidth="3"/>
@@ -114,7 +130,7 @@ The Surya model connection offers several configuration options that can be set 
 - `WORKERS`: Specifies the number of workers for the model server.
 - `THREADS`: Specifies the number of threads for the model server.
 - `MODEL_DIR`: Specifies the model directory.
-- `LANG_LIST`: Specifies the list of languages to be used by the OCR model, separated by commas (default: `mn,en`). 
+- `LANG_LIST`: Specifies the list of languages to be used by the OCR model, separated by commas (default: `mn,en`).
 - `SCORE_THRESHOLD`: Sets the score threshold to filter out noisy results.
 - `LABEL_MAPPINGS_FILE`: Specifies the file with mappings from COCO labels to custom labels.
 - `LABEL_STUDIO_ACCESS_TOKEN`: Specifies the Label Studio access token.

@@ -12,36 +12,10 @@
                 "${workspaceFolder}/label/test_api.py"
             ],
             "env": {
-                // "LABEL_STUDIO_URL": "http://localhost:8080",
-                // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
-                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                // fix '_pytest.scope' nidule miss
+                "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
                 "HF_HUB_OFFLINE": "true",
-                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
-                "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
-                // NOT work Still downloading the main version from HF, so switch use model path
-                // "VLLM_EXTRA_ARGS": "--revision ac7f775 --tokenizer-revision ac7f775 --code-revision ac7f775",
-                "SURYA_MODEL_CHECKPOINT": "/root/.cache/huggingface/hub/models--datalab-to--surya-ocr-2/snapshots/ac7f77523d5e293e3ce67bf0ae02450378ee9aad",
-                "SURYA_GGUF_LOCAL_MODEL_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2.gguf",
-                "SURYA_GGUF_LOCAL_MMPROJ_PATH": "${workspaceFolder}/cache/huggingface/hub/models--datalab-to--surya-ocr-2-gguf/snapshots/6a3a4c30e5e74446d4f8b6afd05b2f2da970f470/surya-2-mmproj.gguf",
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "debugpy: label_wsgi offline",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/label/_wsgi.py",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}/label",
-            "args": [
-                "-d",
-                "-p", "9090"
-            ],
-            "env": {
-                // "LABEL_STUDIO_URL": "http://localhost:8080",
-                // "LABEL_STUDIO_API_KEY": "<your-label-studio-api-key>",
                 "XDG_CACHE_HOME": "${workspaceFolder}/cache",
-                "HF_HUB_OFFLINE": "true",
                 "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
                 "DOCKER_HF_CACHE_PATH": "${workspaceFolder}/cache/huggingface",
                 // NOT work Still downloading the main version from HF, so switch use model path
