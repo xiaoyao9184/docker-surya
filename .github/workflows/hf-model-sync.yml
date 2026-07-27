@@ -52,6 +52,10 @@ jobs:
         working-directory: ./surya
         run: echo "VENV=$(poetry env info -p)" >> $GITHUB_OUTPUT
 
+      - name: Install requests for s3
+        working-directory: ./cache
+        run: ${{ steps.poetry-env.outputs.VENV }}/bin/python -m pip install requests
+
       - name: Download models from s3
         working-directory: ./cache
         run: ${{ steps.poetry-env.outputs.VENV }}/bin/python s3-model-download.py
