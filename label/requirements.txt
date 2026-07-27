@@ -1,4 +1,4 @@
-surya-ocr==0.21.2
+surya-ocr==0.22.0
 
 # Need run manually installation `requirements.no-deps.ext`
 # label-studio-ml depends on the latest label-studio-sdk source code,
