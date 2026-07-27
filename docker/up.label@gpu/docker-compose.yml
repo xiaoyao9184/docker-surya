@@ -56,7 +56,7 @@ services:
   surya_text_detection:
     profiles:
       - server
-    image: xiaoyao9184/surya:0.22.0
+    image: xiaoyao9184/surya:0.22.1
     container_name: surya_text_detection
     command:
       - "python"
@@ -86,7 +86,7 @@ services:
   surya_fast_layout:
     profiles:
       - server
-    image: xiaoyao9184/surya:0.22.0
+    image: xiaoyao9184/surya:0.22.1
     container_name: surya_fast_layout
     command:
       - "python"
@@ -117,7 +117,7 @@ services:
   surya_ocr_error:
     profiles:
       - server
-    image: xiaoyao9184/surya:0.22.0
+    image: xiaoyao9184/surya:0.22.1
     container_name: surya_ocr_error
     command:
       - "python"
@@ -145,7 +145,7 @@ services:
               capabilities: [ gpu ]
 
   surya_label:
-    image: xiaoyao9184/surya:0.22.0
+    image: xiaoyao9184/surya:0.22.1
     container_name: surya-ocr-label
     working_dir: /workspace/label
     command: label-studio-ml start --root-dir /workspace label
