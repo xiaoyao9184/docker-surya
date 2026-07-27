@@ -59,6 +59,73 @@
         },
 
         {
+            "name": "debugpy: surya.detection server",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "surya.detection.server",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8001",
+                "--checkpoint",
+                "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07"
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "DETECTOR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/text_detection/2025_05_07",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya.fast_layout server",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "surya.fast_layout.server",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8002",
+                "--checkpoint",
+                "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d"
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "FAST_LAYOUT_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d",
+                "FAST_ORDER_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/surya_layout2/0aee81d/order",
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "debugpy: surya.ocr_error server",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "surya.ocr_error.server",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/surya",
+            "args": [
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8003",
+                "--checkpoint",
+                "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18"
+            ],
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_HUB_OFFLINE": "true",
+                "OCR_ERROR_MODEL_CHECKPOINT": "${workspaceFolder}/cache/datalab/models/ocr_error_detection/2025_02_18",
+            },
+            "justMyCode": false
+        },
+        {
             "name": "debugpy: surya_screenshot server",
             "type": "debugpy",
             "request": "launch",
