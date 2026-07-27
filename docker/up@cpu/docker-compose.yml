@@ -42,7 +42,7 @@ services:
       - ./../../cache:/root/.cache
 
   surya_app:
-    image: xiaoyao9184/surya:0.21.1
+    image: xiaoyao9184/surya:0.21.2
     container_name: surya_ocr_app
     environment:
       - TORCH_DEVICE=cpu
