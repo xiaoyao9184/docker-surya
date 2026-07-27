@@ -2,13 +2,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "docker: compose up vllm",
+            "label": "docker: compose up vllm + server",
             "type": "shell",
             "options": {
                 "cwd": "${workspaceFolder}/docker/${input:docker-up-path}/",
                 "env": {
                     "SURYA_INFERENCE_BACKEND": "vllm",
-                    "COMPOSE_PROFILES": "vllm",
+                    "SURYA_INFERENCE_URL": "http://surya_ocr_llm:8000/v1",
+                    "DETECTOR_SERVER_URL": "http://surya_text_detection:8001",
+                    "FAST_LAYOUT_SERVER_URL": "http://surya_fast_layout:8002",
+                    "OCR_ERROR_SERVER_URL": "http://surya_ocr_error:8003",
+                    "COMPOSE_PROFILES": "vllm,server",
                 }
             },
             "command": "docker compose -p surya up",

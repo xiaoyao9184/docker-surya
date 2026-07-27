@@ -52,6 +52,79 @@ services:
     volumes:
       - ./../../cache:/root/.cache
 
+  surya_text_detection:
+    profiles:
+      - server
+    image: xiaoyao9184/surya:0.22.0
+    container_name: surya_text_detection
+    command:
+      - "python"
+      - "-m"
+      - "surya.detection.server"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8001"
+      - "--checkpoint"
+      - "/root/.cache/datalab/models/text_detection/2025_05_07"
+    environment:
+      - TORCH_DEVICE=cpu
+      - HF_HUB_OFFLINE=true
+      - DETECTOR_MODEL_CHECKPOINT=/root/.cache/datalab/models/text_detection/2025_05_07
+    ports:
+      - 8001
+    volumes:
+      - ./../../cache:/root/.cache
+
+  surya_fast_layout:
+    profiles:
+      - server
+    image: xiaoyao9184/surya:0.22.0
+    container_name: surya_fast_layout
+    command:
+      - "python"
+      - "-m"
+      - "surya.fast_layout.server"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8002"
+      - "--checkpoint"
+      - "/root/.cache/datalab/models/surya_layout2/0aee81d"
+    environment:
+      - TORCH_DEVICE=cpu
+      - HF_HUB_OFFLINE=true
+      - FAST_LAYOUT_MODEL_CHECKPOINT=/root/.cache/datalab/models/surya_layout2/0aee81d
+      - FAST_ORDER_MODEL_CHECKPOINT=/root/.cache/datalab/models/surya_layout2/0aee81d/order
+    ports:
+      - 8002
+    volumes:
+      - ./../../cache:/root/.cache
+
+  surya_ocr_error:
+    profiles:
+      - server
+    image: xiaoyao9184/surya:0.22.0
+    container_name: surya_ocr_error
+    command:
+      - "python"
+      - "-m"
+      - "surya.ocr_error.server"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8003"
+      - "--checkpoint"
+      - "/root/.cache/datalab/models/ocr_error_detection/2025_02_18"
+    environment:
+      - TORCH_DEVICE=cpu
+      - HF_HUB_OFFLINE=true
+      - OCR_ERROR_MODEL_CHECKPOINT=/root/.cache/datalab/models/ocr_error_detection/2025_02_18
+    ports:
+      - 8003
+    volumes:
+      - ./../../cache:/root/.cache
+
   surya_label:
     image: xiaoyao9184/surya:0.22.0
     container_name: surya-ocr-label
